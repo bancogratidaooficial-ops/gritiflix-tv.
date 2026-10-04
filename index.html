@@ -3,93 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRATIFLIX TV - Painel Oficial</title>
+<title>GRATIFLIX TV - Filmes Online</title>
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
-
-<!-- ADSENSE OFICIAL GRATIFLIX -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2263470788888608" crossorigin="anonymous"></script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#000;color:#fff}
-.header{text-align:center;padding:18px 10px;border-bottom:3px solid #ffcc00}
-.header h1{color:#ffcc00;font-size:32px;font-weight:900;letter-spacing:2px}
-.header p{color:#aaa;font-size:13px;margin-top:4px}
-.banner{text-align:center;padding:60px 20px 40px}
-.banner h2{color:#ffcc00;font-size:38px;font-weight:900;text-shadow:0 0 15px #ffcc00}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px;max-width:500px;margin:0 auto}
-.card{background:#111;border:1px solid #222;border-radius:18px;padding:18px;text-align:center}
-.card h3{font-size:16px;margin-bottom:4px}
-.card span{font-size:11px;color:#888}
-.card .btn{margin-top:14px;background:#ffcc00;color:#000;border:none;width:100%;padding:12px;border-radius:10px;font-weight:900;font-size:14px;display:block;text-decoration:none}
-.ads-box{max-width:500px;margin:15px auto;text-align:center}
-.footer{text-align:center;padding:20px;color:#555;font-size:11px;line-height:1.4}
+.header{position:sticky;top:0;z-index:10;background:#000;text-align:center;padding:14px;border-bottom:3px solid #ffcc00}
+.header h1{color:#ffcc00;font-size:26px;font-weight:900}
+.tabs{display:flex;gap:8px;padding:10px;max-width:800px;margin:auto;overflow:auto}
+.tab{background:#111;border:1px solid #222;color:#fff;padding:10px 16px;border-radius:20px;white-space:nowrap;cursor:pointer}
+.tab.active{background:#ffcc00;color:#000;font-weight:900}
+.section{max-width:800px;margin:auto;padding:10px}
+.section h2{color:#ffcc00;margin:18px 0 10px;font-size:18px}
+.movies{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:600px){.movies{grid-template-columns:1fr 1fr}}
+.movie{background:#111;border-radius:12px;overflow:hidden;border:1px solid #222;cursor:pointer}
+.movie img{width:100%;height:170px;object-fit:cover;display:block}
+.movie .info{padding:8px}
+.movie .info b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.movie .info span{font-size:11px;color:#888}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.card{background:#111;border:1px solid #222;border-radius:16px;padding:14px;text-align:center}
+.card .btn{background:#ffcc00;color:#000;padding:10px;border-radius:8px;display:block;text-decoration:none;font-weight:900;margin-top:8px}
+#player{position:fixed;inset:0;background:#000000f2;z-index:99;display:none;flex-direction:column}
+#player iframe{width:100%;flex:1;border:none}
+#player .top{padding:12px;display:flex;justify-content:space-between;align-items:center;background:#111}
+#player .top button{background:#ffcc00;border:none;padding:8px 14px;border-radius:8px;font-weight:900}
+.ads{max-width:800px;margin:12px auto;text-align:center}
+.footer{text-align:center;padding:24px;color:#555;font-size:11px}
+.footer a{color:#777;text-decoration:none;margin:0 6px}
 </style>
 </head>
 <body>
 
-  <div class="footer">
-<a href="sobre.html" style="color:#777">Sobre</a> | 
-<a href="termos.html" style="color:#777">Termos</a> | 
-<a href="privacidade.html" style="color:#777">Privacidade</a> | 
-<a href="contato.html" style="color:#777">Contato</a><br><br>
-GRATIFLIX TV © 2026 • Painel Oficial
+<div class="header"><h1>GRATIFLIX TV</h1></div>
+
+<div class="tabs">
+<div class="tab active" onclick="showTab('filmes',this)">FILMES GRATIFLIX</div>
+<div class="tab" onclick="showTab('players',this)">PLAYERS OFICIAIS</div>
 </div>
 
-<div class="ads-box">
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2263470788888608"
-     data-ad-slot="auto"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<div class="ads">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2263470788888608" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
+<!-- ABA FILMES PROPRIOS -->
+<div id="aba-filmes" class="section">
+<h2>🔥 Em Alta - Assista Agora</h2>
+<div class="movies" id="listaFilmes"></div>
+
+<h2>📺 Desenhos / Família</h2>
+<div class="movies" id="listaKids"></div>
+</div>
+
+<!-- ABA PLAYERS -->
+<div id="aba-players" class="section" style="display:none">
 <div class="grid">
-  <div class="card">
-    <h3>UniTV</h3><span>Player Oficial</span>
-    <a class="btn" href="intent://com.unitvnetflix.unitv#Intent;package=com.unitvnetflix.unitv;scheme=https;end">ABRIR</a>
-  </div>
-  <div class="card">
-    <h3>IBO Pro Player</h3><span>next.pro.ibo</span>
-    <a class="btn" href="market://details?id=next.pro.ibo">ABRIR</a>
-  </div>
-  <div class="card">
-    <h3>VU Player</h3><span>next.vu.app</span>
-    <a class="btn" href="market://details?id=next.vu.app">ABRIR</a>
-  </div>
-  <div class="card">
-    <h3>Next Smart</h3><span>com.next.smart</span>
-    <a class="btn" href="market://details?id=com.next.smart">ABRIR</a>
-  </div>
-  <div class="card">
-    <h3>Next Legacy</h3><span>com.next.legacy</span>
-    <a class="btn" href="market://details?id=com.next.legacy">ABRIR</a>
-  </div>
-  <div class="card">
-    <h3>MY KNAY</h3><span>Seu player original</span>
-    <a class="btn" href="#">ABRIR</a>
-  </div>
-</div>
-
-<div class="ads-box">
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2263470788888608"
-     data-ad-slot="auto"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-
-<div class="footer">
-GRATIFLIX TV © 2026 • Toque no card para abrir o player<br>Se não tiver instalado vai para Play Store
-</div>
-
-<script>
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
-</script>
-</body>
-</html>
+<div class="card"><b>UniTV</b><br><span style="font-size:11px;color:#888">Player Oficial</span><a class="btn" href="intent://com.unitvnetflix.unitv#Intent;package=com.unitvnetflix.unitv;scheme=https;end">ABRIR</a></div>
+<div class="card"><b>IBO Pro</b><br><span style="font-size:11px
