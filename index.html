@@ -1,137 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRATIFLIX TV - Painel Completo</title>
-<link rel="manifest" href="manifest.json">
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRATIFLIX TV - V4 Completo</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2263470788888608" crossorigin="anonymous"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0a0a0a;color:#fff;padding-bottom:80px}
-.header{background:#000;padding:12px;border-bottom:3px solid #ffcc00;position:sticky;top:0;z-index:5}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#000;color:#fff;padding-bottom:70px}
+.header{background:#000;padding:10px;border-bottom:3px solid #ffcc00;position:sticky;top:0;z-index:10}
 .header h1{color:#ffcc00;text-align:center;font-size:22px;font-weight:900}
-.tools{display:flex;gap:6px;overflow:auto;padding:10px 0;margin-top:8px}
-.tools button{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;white-space:nowrap}
-.tools button.yellow{background:#ffcc00;color:#000;font-weight:900;border:none}
+.tools{display:flex;gap:6px;overflow:auto;padding:8px 0}
+.tools button{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:8px;font-size:11px;white-space:nowrap}
+.tools button.yellow{background:#ffcc00;color:#000;font-weight:900}
+.hero{position:relative;height:230px;background:#111;overflow:hidden}
+.hero iframe{width:100%;height:100%;border:none;pointer-events:none}
+.hero.info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#000);padding:12px;pointer-events:none}
+.hero.info b{font-size:15px;color:#ffcc00}
+.hero.dots{position:absolute;top:10px;right:10px;display:flex;gap:4px}
+.hero.dot{width:18px;height:4px;background:#ffffff55;border-radius:2px}
+.hero.dot.active{background:#ffcc00}
 .tabs{display:flex;gap:8px;padding:10px;max-width:800px;margin:auto}
-.tab{flex:1;background:#111;border:1px solid #222;padding:10px;border-radius:10px;text-align:center;font-size:13px}
+.tab{flex:1;background:#111;border:1px solid #222;padding:9px;border-radius:10px;text-align:center;font-size:12px}
 .tab.active{background:#ffcc00;color:#000;font-weight:900}
 .list{max-width:800px;margin:auto;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{background:#111;border:1px solid #222;border-radius:14px;padding:12px;position:relative}
-.card h3{font-size:14px}
-.card p{font-size:11px;color:#888;margin:4px 0}
-.card.actions{display:flex;gap:4px;margin-top:8px}
-.card.actions button{flex:1;padding:7px;border-radius:6px;border:none;font-size:11px;font-weight:700}
-.btn-play{background:#ffcc00}
-.btn-trash{background:#2a0a0a;color:#ff5555}
-.btn-share{background:#0a1a2a;color:#55aaff}
-.empty{grid-column:1/3;text-align:center;padding:40px;color:#555}
-.modal{position:fixed;inset:0;background:#000000e6;z-index:99;display:none;align-items:center;justify-content:center;padding:20px}
-.modal.box{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;width:100%;max-width:400px}
-.modal input{width:100%;padding:12px;background:#000;border:1px solid #333;border-radius:8px;color:#fff;margin:6px 0}
-.modal.row{display:flex;gap:8px;margin-top:10px}
-.modal.row button{flex:1;padding:12px;border-radius:8px;border:none;font-weight:900}
-.footer{text-align:center;padding:20px;color:#555;font-size:11px}
-.footer a{color:#777;text-decoration:none;margin:0 5px}
+.card{background:#111;border:1px solid #222;border-radius:14px;padding:10px}
+.card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
+.card h3{font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card p{font-size:10px;color:#888}
+.card.actions{display:flex;gap:4px;margin-top:6px}
+.card.actions button{flex:1;padding:6px;border-radius:6px;border:none;font-size:10px;font-weight:800}
+.btn-play{background:#ffcc00}.btn-trash{background:#2a0a0a;color:#ff5555}.btn-share{background:#0a1a2a;color:#55aaff}
+.modal{position:fixed;inset:0;background:#000000e6;z-index:99;display:none;align-items:center;justify-content:center;padding:18px}
+.box{background:#151515;border:1px solid #333;border-radius:16px;padding:16px;width:100%;max-width:380px}
+.box input{width:100%;padding:11px;background:#000;border:1px solid #333;border-radius:8px;color:#fff;margin:5px 0}
+.row{display:flex;gap:8px;margin-top:10px}.row button{flex:1;padding:11px;border-radius:8px;border:none;font-weight:900}
 .ads{max-width:800px;margin:10px auto;text-align:center}
-</style>
-</head>
-<body>
-
-<div class="header">
-<h1>GRATIFLIX TV</h1>
+#player{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column}
+#player #pContent{flex:1;display:flex}
+#player iframe,#player video{width:100%;height:100%;border:none}
+</style></head><body>
+<div class="header"><h1>GRATIFLIX TV</h1>
 <div class="tools">
-<button class="yellow" onclick="openModal()">+ ADD PLAYLIST</button>
+<button class="yellow" onclick="openModal()">+ PLAYLIST</button>
+<button class="yellow" onclick="document.getElementById('fileLocal').click()">📱 DO CELULAR</button>
 <button onclick="backup()">💾 BACKUP</button>
 <button onclick="document.getElementById('restoreFile').click()">♻️ RESTAURAR</button>
-<button onclick="shareAll()">📤 COMPARTILHAR</button>
-<button onclick="invite()">👥 CONVIDAR</button>
-<button onclick="resetAll()" style="color:#ff5555">🗑️ RESET</button>
+<button onclick="resetAll()" style="color:#ff7777">🗑️ RESET</button>
 </div>
-<input type="file" id="restoreFile" style="display:none" accept=".json" onchange="restore(event)">
-</div>
-
-<div class="tabs">
-<div class="tab active" onclick="filterTab('todos',this)">Todos</div>
-<div class="tab" onclick="filterTab('players',this)">Players</div>
-<div class="tab" onclick="filterTab('filmes',this)">Filmes</div>
+<input type="file" id="fileLocal" accept="video/*" style="display:none" onchange="addLocalFile(event)">
+<input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restore(event)">
 </div>
 
-<div class="ads">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2263470788888608" data-ad-slot="auto" data-ad-format="auto"></ins>
-<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-</div>
+<div class="hero" id="hero" onclick="playHero()"><div class="dots" id="dots"></div></div>
 
+<div class="tabs"><div class="tab active" onclick="filterTab('todos',this)">Todos</div><div class="tab" onclick="filterTab('players',this)">Players</div><div class="tab" onclick="filterTab('filmes',this)">Filmes Temp.</div></div>
+<div class="ads"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2263470788888608" data-ad-slot="auto" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 <div class="list" id="list"></div>
 
-<div class="footer">
-<a href="sobre.html">Sobre</a> | <a href="termos.html">Termos</a> | <a href="privacidade.html">Privacidade</a> | <a href="contato.html">Contato</a><br><br>
-GRATIFLIX TV © 2026 - Painel Oficial Integrado
-</div>
-
-<div class="modal" id="modal">
-<div class="box">
-<h3 style="color:#ffcc00;margin-bottom:10px">Nova Playlist / Membro</h3>
-<input id="mName" placeholder="Nome ex: Cliente João ou UniTV">
-<input id="mUrl" placeholder="Link M3U ou Pacote: com.unitvnetflix.unitv">
-<div class="row">
-<button style="background:#333;color:#fff" onclick="closeModal()">Cancelar</button>
-<button style="background:#ffcc00" onclick="saveItem()">Salvar</button>
-</div>
-</div>
-</div>
+<div class="modal" id="modal"><div class="box"><h3 style="color:#ffcc00">Add Link Temporário</h3><input id="mName" placeholder="Nome do filme"><input id="mUrl" placeholder="Link.mp4 ou ID YouTube (11 letras)"><div class="row"><button style="background:#333;color:#fff" onclick="closeModal()">Cancelar</button><button style="background:#ffcc00" onclick="saveItem()">Salvar</button></div></div></div>
+<div id="player"><div style="padding:10px;background:#111;display:flex;justify-content:space-between;align-items:center"><b id="pTitle"></b><button onclick="closePlayer()" style="background:#ffcc00;border:none;padding:6px 12px;border-radius:6px;font-weight:900">X</button></div><div id="pContent"></div></div>
 
 <script>
-let items = JSON.parse(localStorage.getItem('gratiflix_v3')||'[]');
-if(items.length==0){
-items=[
-{name:"UniTV - Player Oficial",url:"com.unitvnetflix.unitv",type:"players"},
-{name:"IBO Pro Player",url:"next.pro.ibo",type:"players"},
-{name:"VU Player",url:"next.vu.app",type:"players"},
-{name:"Next Smart",url:"com.next.smart",type:"players"},
+// 10 TRAILERS OFICIAIS - AUTOPLAY MUDO
+let heroTrailers=[
+{title:"Vingadores: Ultimato",yt:"TcMBFSGVi1c"},
+{title:"O Rei Leão (2019)",yt:"7TavVZMewpY"},
+{title:"Homem-Aranha: Sem Volta",yt:"JfVOs4VSpmA"},
+{title:"Frozen 2",yt:"Zi4LMpSDccc"},
+{title:"Velozes e Furiosos 9",yt:"N6O2ncUKvlg"},
+{title:"A Origem",yt:"YoHD9XEInc0"},
+{title:"Avatar 2",yt:"d9MyW72ELq0"},
+{title:"Batman (2022)",yt:"mqqft2x_Aa4"},
+{title:"Jurassic World",yt:"q4GdJVvdxss"},
+{title:"Minions 2",yt:"6DxjJzmYsXo"}
 ];
-save();
+let heroIndex=0;
+function loadHero(){
+let h=heroTrailers[heroIndex];
+document.getElementById('hero').innerHTML=`<iframe src="https://www.youtube.com/embed/${h.yt}?autoplay=1&mute=1&controls=0&loop=1&playlist=${h.yt}&modestbranding=1&rel=0"></iframe><div class="info"><b>▶ ${h.title}</b><br><span style="font-size:11px">Toque para assistir com som</span></div><div class="dots">${heroTrailers.map((_,i)=>`<div class="dot ${i==heroIndex?'active':''}"></div>`).join('')}</div>`;
 }
-function save(){localStorage.setItem('gratiflix_v3',JSON.stringify(items));render();}
+function playHero(){playVideo(heroTrailers[heroIndex].yt,heroTrailers[heroIndex].title,true)}
+setInterval(()=>{heroIndex=(heroIndex+1)%heroTrailers.length;loadHero()},6000);
+loadHero();
+
+let items=JSON.parse(localStorage.getItem('gratiflix_v4')||'[]');
+if(items.length==0){items=[{name:"UniTV - Player Oficial",url:"com.unitvnetflix.unitv",type:"players",thumb:""},{name:"IBO Pro Player",url:"next.pro.ibo",type:"players",thumb:""},{name:"VU Player",url:"next.vu.app",type:"players",thumb:""},{name:"Next Smart",url:"com.next.smart",type:"players",thumb:""}];save();}
+function save(){localStorage.setItem('gratiflix_v4',JSON.stringify(items));render();}
 function render(f='todos'){
 let l=document.getElementById('list');
-let filtered = f==='todos'?items:items.filter(i=>i.type===f);
-if(filtered.length==0){l.innerHTML='<div class=empty>Peladão! Clica em + ADD PLAYLIST pra adicionar.</div>';return}
+let filtered=f==='todos'?items:items.filter(i=>i.type===f);
+if(filtered.length==0){l.innerHTML='<div style="grid-column:1/3;text-align:center;padding:30px;color:#555">Vazio! Use + PLAYLIST</div>';return}
 l.innerHTML=filtered.map((it,i)=>{
 let idx=items.indexOf(it);
-return `<div class="card"><h3>${it.name}</h3><p>${it.url}</p><div class="actions"><button class="btn-play" onclick="playItem(${idx})">ABRIR</button><button class="btn-share" onclick="shareOne(${idx})">📤</button><button class="btn-trash" onclick="trash(${idx})">🗑️</button></div></div>`
+let thumb=it.thumb||`https://i.ytimg.com/vi/${it.url.length==11?it.url:'TcMBFSGVi1c'}/hqdefault.jpg`;
+if(it.type=='players') thumb=`https://via.placeholder.com/300x170/111/ffcc00?text=${encodeURIComponent(it.name)}`;
+return `<div class="card"><img src="${thumb}"><h3>${it.name}</h3><p>${it.temp?'TEMP • ':''}${it.url.substring(0,28)}</p><div class="actions"><button class="btn-play" onclick="playItem(${idx})">PLAY</button><button class="btn-share" onclick="shareOne(${idx})">📤</button><button class="btn-trash" onclick="trash(${idx})">🗑️</button></div></div>`
 }).join('');
 }
 function openModal(){document.getElementById('modal').style.display='flex'}
 function closeModal(){document.getElementById('modal').style.display='none'}
-function saveItem(){
-let n=document.getElementById('mName').value, u=document.getElementById('mUrl').value;
-if(!n||!u){alert('Preencha nome e link');return}
-items.push({name:n,url:u,type:u.startsWith('com.')||u.startsWith('next.')?'players':'filmes'});
-document.getElementById('mName').value='';document.getElementById('mUrl').value='';
-closeModal();save();
-}
-function trash(i){if(confirm('Mover para lixeira?')){items.splice(i,1);save();}}
-function playItem(i){
-let it=items[i];
-if(it.url.includes('.m3u')||it.url.includes('http')){location.href=it.url}
-else{location.href='intent://'+it.url+'#Intent;package='+it.url+';end'}
-}
-function backup(){
-let blob=new Blob([JSON.stringify(items)],{type:'application/json'});
-let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gratiflix-backup.json';a.click();
-}
-function restore(e){
-let r=new FileReader();
-r.onload=function(){try{items=JSON.parse(r.result);save();alert('Restaurado!')}catch{alert('Arquivo inválido')}};
-r.readAsText(e.target.files[0]);
-}
-function resetAll(){if(confirm('RESET TOTAL? Apaga tudo!')){items=[];save();}}
-function shareAll(){let t='Meu painel GRATIFLIX:\n'+items.map(i=>i.name+' - '+i.url).join('\n');navigator.share?navigator.share({title:'Gratiflix',text:t}): (navigator.clipboard.writeText(t),alert('Copiado!'))}
-function shareOne(i){let it=items[i];let t=it.name+': '+it.url;navigator.share?navigator.share({text:t}):(navigator.clipboard.writeText(t),alert('Link copiado!'))}
-function invite(){let link=location.href;prompt('Link para convidar membros (envia esse link):',link)}
+function saveItem(){let n=document.getElementById('mName').value,u=document.getElementById('mUrl').value;if(!n||!u)return alert('Preencha');items.push({name:n,url:u,type:u.length==11||u.includes('.mp4')||u.includes('blob:')?'filmes':'players',thumb:"",temp:true});closeModal();save();document.getElementById('mName').value='';document.getElementById('mUrl').value='';}
+function addLocalFile(e){let file=e.target.files[0];if(!file)return;let url=URL.createObjectURL(file);items.push({name:file.name,url:url,type:'filmes',thumb:'',temp:true,local:true});save();alert('Filme temporário adicionado! Só funciona nesse celular enquanto a página ficar aberta.');}
+function trash(i){if(confirm('Apagar?')){if(items[i].local)URL.revokeObjectURL(items[i].url);items.splice(i,1);save();}}
+function playItem(i){let it=items[i];if(it.url.startsWith('blob:')||it.url.includes('.mp4'))playVideo(it.url,it.name,false);else if(it.url.length==11)playVideo(it.url,it.name,true);else location.href='intent://'+it.url+'#Intent;package='+it.url+';end';}
+function playVideo(src,title,isYT){document.getElementById('pTitle').innerText=title;let c=document.getElementById('pContent');c.innerHTML=isYT?`<iframe src="https://www.youtube.com/embed/${src}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`:`<video src="${src}" controls autoplay style="width:100%;height:100%"></video>`;document.getElementById('player').style.display='flex';}
+function closePlayer(){document.getElementById('player').style.display='none';document.getElementById('pContent').innerHTML='';}
+function backup(){let blob=new Blob([JSON.stringify(items.filter(i=>!i.local))],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gratiflix-backup.json';a.click();}
+function restore(e){let r=new FileReader();r.onload=()=>{try{items=JSON.parse(r.result);save()}catch{alert('Erro')}};r.readAsText(e.target.files[0]);}
+function resetAll(){if(confirm('Apagar tudo?')){items=[];save();}}
+function shareOne(i){let it=items[i];if(it.local)return alert('Filme local não compartilha, é temporário só seu.');let t=it.name+': '+it.url;navigator.clipboard?navigator.clipboard.writeText(t):prompt('Copia:',t);}
 function filterTab(f,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');render(f)}
 render();
-</script>
-</body>
-</html>
+</script></body></html>
