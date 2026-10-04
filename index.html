@@ -1,111 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRATIFLIX TV - V4 Completo</title>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gratiflix TV - Filmes e Séries Grátis</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2263470788888608" crossorigin="anonymous"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#000;color:#fff;padding-bottom:70px}
-.header{background:#000;padding:10px;border-bottom:3px solid #ffcc00;position:sticky;top:0;z-index:10}
-.header h1{color:#ffcc00;text-align:center;font-size:22px;font-weight:900}
-.tools{display:flex;gap:6px;overflow:auto;padding:8px 0}
-.tools button{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:8px;font-size:11px;white-space:nowrap}
-.tools button.yellow{background:#ffcc00;color:#000;font-weight:900}
-.hero{position:relative;height:230px;background:#111;overflow:hidden}
-.hero iframe{width:100%;height:100%;border:none;pointer-events:none}
-.hero.info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#000);padding:12px;pointer-events:none}
-.hero.info b{font-size:15px;color:#ffcc00}
-.hero.dots{position:absolute;top:10px;right:10px;display:flex;gap:4px}
-.hero.dot{width:18px;height:4px;background:#ffffff55;border-radius:2px}
-.hero.dot.active{background:#ffcc00}
-.tabs{display:flex;gap:8px;padding:10px;max-width:800px;margin:auto}
-.tab{flex:1;background:#111;border:1px solid #222;padding:9px;border-radius:10px;text-align:center;font-size:12px}
-.tab.active{background:#ffcc00;color:#000;font-weight:900}
-.list{max-width:800px;margin:auto;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{background:#111;border:1px solid #222;border-radius:14px;padding:10px}
-.card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-.card h3{font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card p{font-size:10px;color:#888}
-.card.actions{display:flex;gap:4px;margin-top:6px}
-.card.actions button{flex:1;padding:6px;border-radius:6px;border:none;font-size:10px;font-weight:800}
-.btn-play{background:#ffcc00}.btn-trash{background:#2a0a0a;color:#ff5555}.btn-share{background:#0a1a2a;color:#55aaff}
-.modal{position:fixed;inset:0;background:#000000e6;z-index:99;display:none;align-items:center;justify-content:center;padding:18px}
-.box{background:#151515;border:1px solid #333;border-radius:16px;padding:16px;width:100%;max-width:380px}
-.box input{width:100%;padding:11px;background:#000;border:1px solid #333;border-radius:8px;color:#fff;margin:5px 0}
-.row{display:flex;gap:8px;margin-top:10px}.row button{flex:1;padding:11px;border-radius:8px;border:none;font-weight:900}
-.ads{max-width:800px;margin:10px auto;text-align:center}
-#player{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column}
-#player #pContent{flex:1;display:flex}
-#player iframe,#player video{width:100%;height:100%;border:none}
-</style></head><body>
-<div class="header"><h1>GRATIFLIX TV</h1>
-<div class="tools">
-<button class="yellow" onclick="openModal()">+ PLAYLIST</button>
-<button class="yellow" onclick="document.getElementById('fileLocal').click()">📱 DO CELULAR</button>
-<button onclick="backup()">💾 BACKUP</button>
-<button onclick="document.getElementById('restoreFile').click()">♻️ RESTAURAR</button>
-<button onclick="resetAll()" style="color:#ff7777">🗑️ RESET</button>
-</div>
-<input type="file" id="fileLocal" accept="video/*" style="display:none" onchange="addLocalFile(event)">
-<input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restore(event)">
-</div>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0a0a;color:#fff;font-family:'Segoe UI', Arial, sans-serif}
+  header{display:flex;justify-content:space-between;align-items:center;padding:15px 4%;background:linear-gradient(to bottom, #000, transparent);position:fixed;width:100%;z-index:100}
+  .logo{color:#e50914;font-size:32px;font-weight:900;letter-spacing:1px}
+  .logo span{color:#fff}
+  header button{background:#e50914;color:#fff;border:none;padding:8px 18px;border-radius:4px;font-weight:bold;cursor:pointer}
+  
+  .banner{height:85vh;background: linear-gradient(to top, #0a0a0a 10%, transparent 60%), linear-gradient(to right, #0a0a0a 20%, transparent 70%), url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1920&q=80');background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:5% 4%}
+  .banner-info{max-width:600px}
+  .banner h1{font-size:56px;line-height:1;margin-bottom:10px;text-shadow:2px 2px 10px #000}
+  .banner p{font-size:18px;color:#ddd;margin:15px 0;line-height:1.4}
+  .btn-play{background:#fff;color:#000;padding:12px 32px;font-size:20px;font-weight:800;border:none;border-radius:4px;cursor:pointer;margin-right:10px}
+  .btn-lista{background:rgba(109,109,110,0.7);color:#fff;padding:12px 32px;font-size:18px;font-weight:600;border:none;border-radius:4px;cursor:pointer}
+  .tag-top10{background:#e50914;color:#fff;padding:4px 10px;font-size:12px;font-weight:900;border-radius:3px;margin-bottom:12px;display:inline-block}
 
-<div class="hero" id="hero" onclick="playHero()"><div class="dots" id="dots"></div></div>
-
-<div class="tabs"><div class="tab active" onclick="filterTab('todos',this)">Todos</div><div class="tab" onclick="filterTab('players',this)">Players</div><div class="tab" onclick="filterTab('filmes',this)">Filmes Temp.</div></div>
-<div class="ads"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2263470788888608" data-ad-slot="auto" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
-<div class="list" id="list"></div>
-
-<div class="modal" id="modal"><div class="box"><h3 style="color:#ffcc00">Add Link Temporário</h3><input id="mName" placeholder="Nome do filme"><input id="mUrl" placeholder="Link.mp4 ou ID YouTube (11 letras)"><div class="row"><button style="background:#333;color:#fff" onclick="closeModal()">Cancelar</button><button style="background:#ffcc00" onclick="saveItem()">Salvar</button></div></div></div>
-<div id="player"><div style="padding:10px;background:#111;display:flex;justify-content:space-between;align-items:center"><b id="pTitle"></b><button onclick="closePlayer()" style="background:#ffcc00;border:none;padding:6px 12px;border-radius:6px;font-weight:900">X</button></div><div id="pContent"></div></div>
-
-<script>
-// 10 TRAILERS OFICIAIS - AUTOPLAY MUDO
-let heroTrailers=[
-{title:"Vingadores: Ultimato",yt:"TcMBFSGVi1c"},
-{title:"O Rei Leão (2019)",yt:"7TavVZMewpY"},
-{title:"Homem-Aranha: Sem Volta",yt:"JfVOs4VSpmA"},
-{title:"Frozen 2",yt:"Zi4LMpSDccc"},
-{title:"Velozes e Furiosos 9",yt:"N6O2ncUKvlg"},
-{title:"A Origem",yt:"YoHD9XEInc0"},
-{title:"Avatar 2",yt:"d9MyW72ELq0"},
-{title:"Batman (2022)",yt:"mqqft2x_Aa4"},
-{title:"Jurassic World",yt:"q4GdJVvdxss"},
-{title:"Minions 2",yt:"6DxjJzmYsXo"}
-];
-let heroIndex=0;
-function loadHero(){
-let h=heroTrailers[heroIndex];
-document.getElementById('hero').innerHTML=`<iframe src="https://www.youtube.com/embed/${h.yt}?autoplay=1&mute=1&controls=0&loop=1&playlist=${h.yt}&modestbranding=1&rel=0"></iframe><div class="info"><b>▶ ${h.title}</b><br><span style="font-size:11px">Toque para assistir com som</span></div><div class="dots">${heroTrailers.map((_,i)=>`<div class="dot ${i==heroIndex?'active':''}"></div>`).join('')}</div>`;
-}
-function playHero(){playVideo(heroTrailers[heroIndex].yt,heroTrailers[heroIndex].title,true)}
-setInterval(()=>{heroIndex=(heroIndex+1)%heroTrailers.length;loadHero()},6000);
-loadHero();
-
-let items=JSON.parse(localStorage.getItem('gratiflix_v4')||'[]');
-if(items.length==0){items=[{name:"UniTV - Player Oficial",url:"com.unitvnetflix.unitv",type:"players",thumb:""},{name:"IBO Pro Player",url:"next.pro.ibo",type:"players",thumb:""},{name:"VU Player",url:"next.vu.app",type:"players",thumb:""},{name:"Next Smart",url:"com.next.smart",type:"players",thumb:""}];save();}
-function save(){localStorage.setItem('gratiflix_v4',JSON.stringify(items));render();}
-function render(f='todos'){
-let l=document.getElementById('list');
-let filtered=f==='todos'?items:items.filter(i=>i.type===f);
-if(filtered.length==0){l.innerHTML='<div style="grid-column:1/3;text-align:center;padding:30px;color:#555">Vazio! Use + PLAYLIST</div>';return}
-l.innerHTML=filtered.map((it,i)=>{
-let idx=items.indexOf(it);
-let thumb=it.thumb||`https://i.ytimg.com/vi/${it.url.length==11?it.url:'TcMBFSGVi1c'}/hqdefault.jpg`;
-if(it.type=='players') thumb=`https://via.placeholder.com/300x170/111/ffcc00?text=${encodeURIComponent(it.name)}`;
-return `<div class="card"><img src="${thumb}"><h3>${it.name}</h3><p>${it.temp?'TEMP • ':''}${it.url.substring(0,28)}</p><div class="actions"><button class="btn-play" onclick="playItem(${idx})">PLAY</button><button class="btn-share" onclick="shareOne(${idx})">📤</button><button class="btn-trash" onclick="trash(${idx})">🗑️</button></div></div>`
-}).join('');
-}
-function openModal(){document.getElementById('modal').style.display='flex'}
-function closeModal(){document.getElementById('modal').style.display='none'}
-function saveItem(){let n=document.getElementById('mName').value,u=document.getElementById('mUrl').value;if(!n||!u)return alert('Preencha');items.push({name:n,url:u,type:u.length==11||u.includes('.mp4')||u.includes('blob:')?'filmes':'players',thumb:"",temp:true});closeModal();save();document.getElementById('mName').value='';document.getElementById('mUrl').value='';}
-function addLocalFile(e){let file=e.target.files[0];if(!file)return;let url=URL.createObjectURL(file);items.push({name:file.name,url:url,type:'filmes',thumb:'',temp:true,local:true});save();alert('Filme temporário adicionado! Só funciona nesse celular enquanto a página ficar aberta.');}
-function trash(i){if(confirm('Apagar?')){if(items[i].local)URL.revokeObjectURL(items[i].url);items.splice(i,1);save();}}
-function playItem(i){let it=items[i];if(it.url.startsWith('blob:')||it.url.includes('.mp4'))playVideo(it.url,it.name,false);else if(it.url.length==11)playVideo(it.url,it.name,true);else location.href='intent://'+it.url+'#Intent;package='+it.url+';end';}
-function playVideo(src,title,isYT){document.getElementById('pTitle').innerText=title;let c=document.getElementById('pContent');c.innerHTML=isYT?`<iframe src="https://www.youtube.com/embed/${src}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`:`<video src="${src}" controls autoplay style="width:100%;height:100%"></video>`;document.getElementById('player').style.display='flex';}
-function closePlayer(){document.getElementById('player').style.display='none';document.getElementById('pContent').innerHTML='';}
-function backup(){let blob=new Blob([JSON.stringify(items.filter(i=>!i.local))],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gratiflix-backup.json';a.click();}
-function restore(e){let r=new FileReader();r.onload=()=>{try{items=JSON.parse(r.result);save()}catch{alert('Erro')}};r.readAsText(e.target.files[0]);}
-function resetAll(){if(confirm('Apagar tudo?')){items=[];save();}}
-function shareOne(i){let it=items[i];if(it.local)return alert('Filme local não compartilha, é temporário só seu.');let t=it.name+': '+it.url;navigator.clipboard?navigator.clipboard.writeText(t):prompt('Copia:',t);}
-function filterTab(f,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');render(f)}
-render();
-</script></body></html>
+  .row{padding:20px 4%}
+  .row h2{font-size:22px;margin-bottom:12px}
+  .carrossel{display:flex;gap:12px;overflow-x:auto;padding:10px 0}
+  .carrossel::-webkit-scrollbar{display:none}
+  .card{min-width:180px;width:180px;height:270px;border-radius:8px;overflow:hidden;position:relative;cursor:pointer;transition:.3s;flex-shrink:0;background:#222}
+  .card img{width:100%;height:100%;object-fit:cover}
+  .card:hover{transform:scale(1.18);z-index:10;box-shadow:0 0 25px rgba(229,9,20,0.7)}
+  .card .selo{position:absolute;top:6px;left:6px;background:#e50914;color:#fff;font-size:10px;font-weight:900;padding:3px 6px;border-radius:3px}
+  .card .s
