@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRATIFLIX TV</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 4%;background:#000;position:fixed;width:100%;z-index:100;top:0}
+.logo{color:#e50914;font-size:28px;font-weight:900}
+.header-actions{display:flex;gap:6px;flex-wrap:wrap}
+.header-actions button{border:none;padding:8px 12px;border-radius:4px;font-weight:700;cursor:pointer;font-size:12px}
+.btn-red{background:#e50914;color:#fff}
+.btn-white{background:#fff;color:#000}
+.btn-gray{background:#444;color:#fff}
+.banner{margin-top:70px;height:70vh;background:linear-gradient(to top,#0a0a0a,transparent),url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:4%}
+.banner h1{font-size:32px;margin:10px 0}
+.banner p{color:#ddd;margin-bottom:15px}
+.btn-play{background:#fff;color:#000;padding:10px 20px;border:none;border-radius:4px;font-weight:800;font-size:16px;cursor:pointer}
+.row-title{font-size:20px;margin:25px 0 10px 4%}
+.row{display:flex;gap:10px;overflow-x:auto;padding:0 4% 10px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.card{min-width:140px;height:210px;background:#222;border-radius:6px;overflow:hidden;cursor:pointer;flex-shrink:0}
+.card img{width:100%;height:85%;object-fit:cover}
+.card div{padding:5px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none}
+#player iframe{width:100%;height:100%;border:none}
+#player button{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:8px 14px;border-radius:4px;z-index:10000}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">GRATIFLIX TV</div>
+<div class="header-actions">
+<button class="btn-red" onclick="addLista()">+ PLAYLIST</button>
+<button class="btn-white" onclick="instalar()">DO CELULAR</button>
+<button class="btn-gray" onclick="fazerBackup()">BACKUP</button>
+<button class="btn-gray" onclick="fazerRestore()">RESTAURAR</button>
+</div>
+</header>
+
+<div class="banner">
+<div>
+<div style="background:#e50914;display:inline-block;padding:3px 6px;font-size:11px;font-weight:900;border-radius:2px">TOP 10 HOJE NO BRASIL</div>
+<h1>Filmes, Séries e Canais Ao Vivo</h1>
+<p>Assista tudo grátis sem cadastro. Experiência tipo Netflix.</p>
+<button class="btn-play" onclick="abrirPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ')">▶ Assistir</button>
+</div>
+</div>
+
+<div class="row-title">🔥 Em Alta Agora</div>
+<div class="row" id="lista1"></div>
+<div class="row-title">🎬 Filmes</div>
+<div class="row" id="lista2"></div>
+<div class="row-title">📺 Minha Lista</div>
+<div class="row" id="minha"></div>
+
+<div id="player">
+<button onclick="fecharPlayer()">X FECHAR</button>
+<iframe id="frame" allowfullscreen></iframe>
+</div>
+
+<script>
+var filmes=[
+{t:"Ação Total",i:"https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+{t:"Aventura 2024",i:"https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+{t:"Comédia Top",i:"https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+{t:"Drama Intenso",i:"https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ"}
+];
+
+function card(f){return '<div class="card" onclick="abrirPlayer(\''+f.l+'\')"><img src="'+f.i+'"><div>'+f.t+'</div></div>';}
+document.getElementById('lista1').innerHTML=filmes.map(card).join('');
+document.getElementById('lista2').innerHTML=filmes.slice().reverse().map(card).join('');
+
+function abrirPlayer(link){
+ document.getElementById('frame').src=link;
+ document.getElementById('player').style.display='block';
+}
+function fecharPlayer(){
+ document.getElementById('player').style.display='none';
+ document.getElementById('frame').src='';
+}
+
+var promptInstalacao=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();promptInstalacao=e;});
+
+function instalar(){
+ if(promptInstalacao){promptInstalacao.prompt();promptInstalacao.userChoice.then(function(){promptInstalacao=null;});}
+ else{alert('No Chrome: 3 pontinhos > Adicionar a tela inicial > Instalar');}
+}
+
+function addLista(){
+ var url=prompt('Cole o link do filme:');
+ if(!url)return;
+ var nome=prompt('Nome do filme:')||'Meu Filme';
+ var lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ lista.push({t:nome,i:'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300',l:url});
+ localStorage.setItem('grati_lista',JSON.stringify(lista));
+ mostraMinha();
+}
+
+function mostraMinha(){
+ var lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ if(lista.length===0){document.getElementById('minha').innerHTML='<div style=color:#777;padding:10px>Lista vazia</div>';return;}
+ document.getElementById('minha').innerHTML=lista.map(card).join('');
+}
+mostraMinha();
+
+function fazerBackup(){
+ var d=localStorage.getItem('grati_lista')||'[]';
+ var blob=new Blob([d],{type:'application/json'});
+ var u=URL.createObjectURL(blob);
+ var a=document.createElement('a');a.href=u;a.download='gratiflix-backup.json';a.click();
+}
+function fazerRestore(){
+ var inp=document.createElement('input');inp.type='file';
+ inp.onchange=function(e){
+  var file=e.target.files[0];
+  var r=new FileReader();
+  r.onload=function(){localStorage.setItem('grati_lista',r.result);mostraMinha();alert('Restaurado!');};
+  r.readAsText(file);
+ };
+ inp.click();
+}
+</script>
+</body>
+</html>
