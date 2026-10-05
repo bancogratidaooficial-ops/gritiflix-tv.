@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRATIFLIX TV</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:Arial,sans-serif}
+header{padding:12px 4%;background:#000;position:fixed;width:100%;z-index:100;top:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{color:#e50914;font-size:28px;font-weight:900}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.actions button{border:none;padding:8px 12px;border-radius:4px;font-weight:700;cursor:pointer;font-size:12px}
+.btn-red{background:#e50914;color:#fff}.btn-white{background:#fff;color:#000}.btn-gray{background:#444;color:#fff}
+.search{width:100%;margin-top:10px}
+.search input{width:100%;padding:12px;border-radius:6px;border:none;background:#1a1a1a;color:#fff;font-size:15px}
+.banner{margin-top:110px;height:60vh;background:linear-gradient(to top,#0a0a0a,transparent),url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:4%}
+.row-title{font-size:20px;margin:25px 0 10px 4%}
+.row{display:flex;gap:10px;overflow-x:auto;padding:0 4% 10px}
+.card{min-width:140px;height:210px;background:#222;border-radius:6px;overflow:hidden;cursor:pointer;flex-shrink:0}
+.card img{width:100%;height:85%;object-fit:cover}
+.card div{padding:5px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none}
+#player iframe,#player video{width:100%;height:100%;border:none}
+#player button{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:8px 14px;border-radius:4px;z-index:10000}
+#modalAdd{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#1a1a1a;padding:20px;border-radius:8px;width:100%;max-width:420px}
+.modal-box h3{margin-bottom:15px;color:#e50914}
+.modal-box input{width:100%;padding:10px;margin:8px 0;border:none;border-radius:4px;background:#333;color:#fff}
+.modal-box button{width:100%;padding:12px;margin-top:8px;border:none;border-radius:4px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+<div class="top">
+<div class="logo">GRATIFLIX TV</div>
+<div class="actions">
+<button class="btn-red" onclick="abrirModal()">+ PLAYLIST</button>
+<button class="btn-white" onclick="instalar()">DO CELULAR</button>
+<button class="btn-gray" onclick="fazerBackup()">BACKUP</button>
+<button class="btn-gray" onclick="fazerRestore()">RESTAURAR</button>
+</div>
+</div>
+<div class="search"><input id="busca" placeholder="🔍 Buscar filme, série, canal..." oninput="filtrar()"></div>
+</header>
+
+<div class="banner">
+<div>
+<h1>Filmes, Séries e Canais Ao Vivo</h1>
+<p>Assista grátis, sem cadastro.</p>
+<button style="background:#fff;color:#000;padding:10px 20px;border:none;border-radius:4px;font-weight:800" onclick="abrirPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ',false)">▶ Assistir</button>
+</div>
+</div>
+
+<div class="row-title">🔥 Em Alta Agora</div>
+<div class="row" id="lista1"></div>
+<div class="row-title">🎬 Filmes</div>
+<div class="row" id="lista2"></div>
+<div class="row-title">📺 Minha Lista</div>
+<div class="row" id="minha"></div>
+
+<div id="player">
+<button onclick="fecharPlayer()">X FECHAR</button>
+<iframe id="frame" style="display:none" allowfullscreen></iframe>
+<video id="videoLocal" style="display:none" controls></video>
+</div>
+
+<div id="modalAdd">
+<div class="modal-box">
+<h3>Adicionar Conteúdo</h3>
+<input id="inputNome" placeholder="Nome (ex: Vingadores)">
+<input id="inputLink" placeholder="Link YouTube (opcional)">
+<button style="background:#e50914;color:#fff" onclick="salvarLink()">SALVAR LINK YOUTUBE</button>
+<hr style="margin:15px 0;border-color:#333">
+<input type="file" id="fileCelular" accept="video/*" style="background:#000">
+<button style="background:#fff;color:#000" onclick="salvarDoCelular()">ADICIONAR DIRETO DO CELULAR</button>
+<button style="background:#333;color:#fff" onclick="fecharModal()">CANCELAR</button>
+</div>
+</div>
+
+<script>
+var filmesBase=[
+{t:"Ação Total",i:"https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"yt"},
+{t:"Aventura 2024",i:"https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"yt"},
+{t:"Comédia Top",i:"https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"yt"},
+{t:"Drama Intenso",i:"https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300",l:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"yt"}
+];
+function converteYoutube(url){
+ if(!url)return "";
+ if(url.includes("embed"))return url;
+ var id="";
+ if(url.includes("youtu.be/")){id=url.split("youtu.be/")[1].split("?")[0];}
+ else if(url.includes("watch?v=")){id=url.split("watch?v=")[1].split("&")[0];}
+ else if(url.includes("shorts/")){id=url.split("shorts/")[1].split("?")[0];}
+ else return url;
+ return "https://www.youtube.com/embed/"+id;
+}
+function card(f, idx, origem){
+ var isLocal = f.type==="local"?"(Celular) ":"";
+ return '<div class="card" onclick="abrirPlayer(\''+f.l+'\','+(f.type==="local")+',\''+origem+'\','+idx+')"><img src="'+f.i+'"><div>'+isLocal+f.t+'</div></div>';
+}
+function renderTudo(filmesFiltrados){
+ var lista = filmesFiltrados || filmesBase;
+ document.getElementById('lista1').innerHTML=lista.map((f,i)=>card(f,i,'base')).join('');
+ document.getElementById('lista2').innerHTML=lista.slice().reverse().map((f,i)=>card(f,i,'base')).join('');
+}
+renderTudo();
+
+function abrirPlayer(link, isLocal, origem, idx){
+ if(isLocal){
+   document.getElementById('frame').style.display='none';
+   var v=document.getElementById('videoLocal');
+   v.style.display='block';
+   v.src=link;
+   v.play();
+ } else {
+   document.getElementById('videoLocal').style.display='none';
+   document.getElementById('videoLocal').pause();
+   var fr=document.getElementById('frame');
+   fr.style.display='block';
+   fr.src=link;
+ }
+ document.getElementById('player').style.display='block';
+}
+function fecharPlayer(){
+ document.getElementById('player').style.display='none';
+ document.getElementById('frame').src='';
+ document.getElementById('videoLocal').pause();
+ document.getElementById('videoLocal').src='';
+}
+var promptInstalacao=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();promptInstalacao=e;});
+function instalar(){ if(promptInstalacao){promptInstalacao.prompt();} else{alert('No Chrome: 3 pontinhos > Adicionar à tela inicial');} }
+function abrirModal(){document.getElementById('modalAdd').style.display='flex';}
+function fecharModal(){document.getElementById('modalAdd').style.display='none';}
+
+function salvarLink(){
+ var nome=document.getElementById('inputNome').value||"Meu Filme";
+ var link=document.getElementById('inputLink').value;
+ if(!link){alert('Cole o link!');return;}
+ var linkFinal=converteYoutube(link);
+ var lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ lista.push({t:nome,i:"https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300",l:linkFinal,type:"yt"});
+ localStorage.setItem('grati_lista',JSON.stringify(lista));
+ mostraMinha(); fecharModal(); limparCampos();
+}
+function salvarDoCelular(){
+ var file=document.getElementById('fileCelular').files[0];
+ if(!file){alert('Escolha um vídeo da galeria primeiro!');return;}
+ var nome=document.getElementById('inputNome').value||file.name;
+ var urlLocal=URL.createObjectURL(file);
+ var lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ lista.push({t:nome,i:"https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300",l:urlLocal,type:"local",isBlob:true});
+ localStorage.setItem('grati_lista',JSON.stringify(lista));
+ alert('ATENÇÃO: Vídeo do celular adicionado! Ele só funciona nesse celular. Faça BACKUP depois.');
+ mostraMinha(); fecharModal(); limparCampos();
+}
+function limparCampos(){document.getElementById('inputNome').value='';document.getElementById('inputLink').value='';document.getElementById('fileCelular').value='';}
+
+function mostraMinha(){
+ var lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ if(lista.length===0){document.getElementById('minha').innerHTML='<div style=color:#777;padding:10px>Clique em + PLAYLIST para adicionar</div>';return;}
+ document.getElementById('minha').innerHTML=lista.map((f,i)=>card(f,i,'minha')).join('');
+}
+mostraMinha();
+function filtrar(){
+ var termo=document.getElementById('busca').value.toLowerCase();
+ if(termo===""){renderTudo();mostraMinha();return;}
+ var filtrados=filmesBase.filter(f=>f.t.toLowerCase().includes(termo));
+ renderTudo(filtrados);
+ var minha=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ var minhaFiltrada=minha.filter(f=>f.t.toLowerCase().includes(termo));
+ if(minhaFiltrada.length>0){
+   document.getElementById('minha').innerHTML=minhaFiltrada.map((f,i)=>card(f,i,'minha')).join('');
+ } else if(termo!=="") {
+   document.getElementById('minha').innerHTML='<div style=color:#777;padding:10px>Nenhum na sua lista com "'+termo+'"</div>';
+ }
+}
+function fazerBackup(){
+ var d=localStorage.getItem('grati_lista')||'[]';
+ var blob=new Blob([d],{type:'application/json'});
+ var u=URL.createObjectURL(blob);
+ var a=document.createElement('a');a.href=u;a.download='gratiflix-backup.json';a.click();
+}
+function fazerRestore(){
+ var inp=document.createElement('input');inp.type='file';
+ inp.onchange=function(e){
+  var file=e.target.files[0];
+  var r=new FileReader();
+  r.onload=function(){localStorage.setItem('grati_lista',r.result);mostraMinha();alert('Restaurado!');};
+  r.readAsText(file);
+ };
+ inp.click();
+}
+</script>
+</body>
+</html>
