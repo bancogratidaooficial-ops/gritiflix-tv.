@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRATIFLIX TV - EDITAVEL</title>
+<title>GRATIFLIX TV</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a0a;color:#fff;font-family:Arial,sans-serif}
@@ -16,32 +16,30 @@ header{padding:10px 4%;background:#000;position:fixed;width:100%;top:0;z-index:1
 .search{margin-top:8px;display:flex;gap:6px}
 .search input{flex:1;padding:11px;border-radius:6px;border:none;background:#1a1a1a;color:#fff}
 .search button{padding:11px 14px;border-radius:6px;border:none;background:#ffcc00;font-weight:900}
-.banner{margin-top:115px;height:35vh;background:linear-gradient(to top,#0a0a0a,transparent),url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80');background-size:cover;display:flex;align-items:flex-end;padding:4%}
-.row-title{font-size:17px;margin:20px 0 8px 4%;display:flex;justify-content:space-between}
+.banner{margin-top:115px;height:30vh;background:#111;display:flex;align-items:flex-end;padding:4%}
+.row-title{font-size:17px;margin:22px 0 8px 4%;font-weight:800}
 .row{display:flex;gap:10px;overflow-x:auto;padding:0 4% 10px}
-.card{min-width:135px;height:200px;background:#222;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0}
-.card img{width:100%;height:70%;object-fit:cover}
-.card .t{padding:5px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;justify-content:space-between;align-items:center}
-.card .edit{position:absolute;top:4px;left:4px;background:rgba(255,204,0,0.9);border:none;color:#000;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:12px}
-.card .lixeira{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.8);border:none;color:#fff;padding:4px 6px;border-radius:4px;cursor:pointer}
+.card{min-width:135px;max-width:135px;height:210px;background:#222;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0}
+.card img{width:100%;height:75%;object-fit:cover;cursor:pointer}
+.card.t{padding:4px;font-size:11px;background:#111;height:25%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.edit{position:absolute;top:4px;left:4px;background:#ffcc00;color:#000;border:none;padding:4px 6px;border-radius:4px;font-size:11px;z-index:2}
+.lixeira{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.85);color:#fff;border:none;padding:4px 6px;border-radius:4px;z-index:2}
 #player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none}
 #player iframe,#player video{width:100%;height:100%;border:none}
 #player.voltar{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:8px 14px;border-radius:4px;z-index:10000}
 #modalAdd{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:10000;display:none;align-items:center;justify-content:center;padding:15px}
-.modal-box{border:2px solid #ffcc00;border-radius:18px;background:#111;padding:18px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
-.modal-box h2{text-align:center;color:#ffcc00;margin-bottom:12px;font-size:18px}
+.modal-box{border:2px solid #ffcc00;border-radius:18px;background:#111;padding:18px;width:100%;max-width:420px}
 .modal-box label{color:#ffcc00;font-weight:800;font-size:12px;margin:8px 0 4px;display:block}
 .modal-box select,.modal-box input[type=text]{width:100%;padding:11px;border-radius:10px;border:none;background:#222;color:#fff;margin-bottom:8px}
 .file-box{background:#222;border-radius:10px;padding:8px;margin-bottom:8px}
 #preview,#previewCapa{width:100%;max-height:140px;border-radius:8px;display:none;margin-top:6px;background:#000}
 .btns{display:flex;gap:10px;margin-top:12px}
-.btns button{flex:1;padding:13px;border:none;border-radius:10px;font-weight:800;cursor:pointer}
+.btns button{flex:1;padding:13px;border:none;border-radius:10px;font-weight:800}
 </style>
 </head>
 <body>
 <header>
-<div class="top">
-<div class="logo">GRATIFLIX TV</div>
+<div class="top"><div class="logo">GRATIFLIX TV</div>
 <div class="actions">
 <button class="btn-red" onclick="abrirModal()">+ VIDEO CELULAR</button>
 <button class="btn-green" onclick="abrirModalYT()">+ LINK YT</button>
@@ -49,54 +47,95 @@ header{padding:10px 4%;background:#000;position:fixed;width:100%;top:0;z-index:1
 <button class="btn-white" onclick="voltar()">↩ VOLTAR</button>
 <button class="btn-gray" onclick="compartilharApp()">↗ COMPARTILHAR</button>
 <button class="btn-yellow" onclick="convidarMembros()">+ CONVIDAR</button>
-</div>
-</div>
+</div></div>
 <div class="search"><input id="busca" placeholder="🔍 Pesquisar..." oninput="filtrar()"><button onclick="filtrar()">🔍</button></div>
 </header>
-
-<div class="banner"><div><h2>Filmes Editáveis</h2><p style="font-size:12px;color:#ccc">Clique no ✏️ pra mudar o nome</p></div></div>
-<div id="containerPastas"></div>
-
-<div id="player">
-<button class="voltar" onclick="fecharPlayer()">↩ VOLTAR</button>
-<iframe id="frame" style="display:none" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-<video id="videoLocal" style="display:none" controls></video>
-</div>
-
-<div id="modalAdd">
-<div class="modal-box">
+<div class="banner"><div><h2>Meus Filmes</h2><p style="font-size:12px">Clique no ✏️ pra mudar o nome</p></div></div>
+<div id="containerPastas" style="min-height:300px"></div>
+<div id="player"><button class="voltar" onclick="fecharPlayer()">↩ VOLTAR</button><iframe id="frame" style="display:none" allowfullscreen allow="autoplay; encrypted-media"></iframe><video id="videoLocal" style="display:none" controls></video></div>
+<div id="modalAdd"><div class="modal-box">
 <h2 id="tituloModal">+ ADD</h2>
 <label>Pasta / Gênero:</label><select id="pastaDestino"></select>
-<label>Nome (digite o que quiser):</label><input type="text" id="inputNome" placeholder="Digite o nome do filme aqui">
+<label>Nome (você digita):</label><input type="text" id="inputNome" placeholder="Digite o nome">
 <div id="areaYT" style="display:none"><label>🔗 Link YouTube:</label><input type="text" id="inputLinkYT" placeholder="https://youtu.be/..."></div>
 <div id="areaCelular"><label>📷 CAPA:</label><div class="file-box"><input type="file" id="inputCapa" accept="image/*"></div><img id="previewCapa"><label>🎬 VÍDEO:</label><div class="file-box"><input type="file" id="inputVideo" accept="video/*"></div><video id="preview" controls></video></div>
 <div class="btns"><button style="background:#333;color:#fff" onclick="fecharModal()">Cancelar</button><button style="background:#ffcc00;color:#000" onclick="salvarPWA()">Salvar</button></div>
-</div>
-</div>
-
+</div></div>
 <script>
-let GENEROS_PADRAO = ["Ação","Marvel","Doramas","Comédia","Ficção","Terror","Geral"];
+// CORREÇÃO TELA PRETA - AUTO CONSERTO
+try{ JSON.parse(localStorage.getItem('grati_lista')||'[]'); }catch(e){ localStorage.removeItem('grati_lista'); }
+try{ JSON.parse(localStorage.getItem('grati_generos')||'[]'); }catch(e){ localStorage.removeItem('grati_generos'); }
+
+let GENEROS_PADRAO = ["Filmes","Doramas","Ação","Comédia","Geral"];
 let filmesBase=[
-{t:"Video Columbia",i:"https://img.youtube.com/vi/lpeIKPBsuLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lpeIKPBsuLc",pasta:"Ação",type:"yt"},
-{t:"Marvel 1",i:"https://img.youtube.com/vi/lIZdF-Yf-ig/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lIZdF-Yf-ig",pasta:"Marvel",type:"yt"},
-{t:"Marvel 2",i:"https://img.youtube.com/vi/PuVuB9iKZGg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/PuVuB9iKZGg",pasta:"Marvel",type:"yt"},
-{t:"Marvel 3",i:"https://img.youtube.com/vi/jaGKARCrOqI/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jaGKARCrOqI",pasta:"Marvel",type:"yt"},
-{t:"Marvel 4",i:"https://img.youtube.com/vi/Kp6uGrRC_P4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Kp6uGrRC_P4",pasta:"Marvel",type:"yt"},
-{t:"Marvel 5",i:"https://img.youtube.com/vi/iMGIXI8hgM4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/iMGIXI8hgM4",pasta:"Marvel",type:"yt"},
-{t:"Marvel 6",i:"https://img.youtube.com/vi/27eKL7NsD6k/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/27eKL7NsD6k",pasta:"Marvel",type:"yt"},
-{t:"Comédia",i:"https://img.youtube.com/vi/AJzLawEAOtA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/AJzLawEAOtA",pasta:"Comédia",type:"yt"},
-{t:"Filme 1",i:"https://img.youtube.com/vi/gaPE0HTgAP0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/gaPE0HTgAP0",pasta:"Doramas",type:"yt"},
-{t:"Casamento Arranjado",i:"https://img.youtube.com/vi/80UbjxkkgLs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/80UbjxkkgLs",pasta:"Doramas",type:"yt"},
-{t:"Minhas 4 Mini Versões",i:"https://img.youtube.com/vi/e0ck628ObK8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/e0ck628ObK8",pasta:"Doramas",type:"yt"},
-{t:"Filme 4",i:"https://img.youtube.com/vi/d-whmqx4bFU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/d-whmqx4bFU",pasta:"Doramas",type:"yt"},
-{t:"Filme 5",i:"https://img.youtube.com/vi/kYnCTHWUG_4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/kYnCTHWUG_4",pasta:"Doramas",type:"yt"},
-{t:"Filme 6",i:"https://img.youtube.com/vi/pidOEppgiTA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/pidOEppgiTA",pasta:"Doramas",type:"yt"},
-{t:"Filme 7",i:"https://img.youtube.com/vi/e83StaXfk10/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/e83StaXfk10",pasta:"Doramas",type:"yt"},
-{t:"Filme 8",i:"https://img.youtube.com/vi/FbXARpOhCxs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/FbXARpOhCxs",pasta:"Doramas",type:"yt"},
-{t:"Filme 9",i:"https://img.youtube.com/vi/f1qrdpbGMQo/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/f1qrdpbGMQo",pasta:"Doramas",type:"yt"},
-{t:"Filme 10",i:"https://img.youtube.com/vi/jWqdqeXtKW8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jWqdqeXtKW8",pasta:"Doramas",type:"yt"},
-{t:"Filme 11",i:"https://img.youtube.com/vi/t8NUSlDv8Gs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/t8NUSlDv8Gs",pasta:"Doramas",type:"yt"}
+// SÓ LINKS - SEM NOMES
+{t:"Filme 1",i:"https://img.youtube.com/vi/lpeIKPBsuLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lpeIKPBsuLc",pasta:"Filmes",type:"yt"},
+{t:"Filme 2",i:"https://img.youtube.com/vi/lIZdF-Yf-ig/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lIZdF-Yf-ig",pasta:"Filmes",type:"yt"},
+{t:"Filme 3",i:"https://img.youtube.com/vi/PuVuB9iKZGg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/PuVuB9iKZGg",pasta:"Filmes",type:"yt"},
+{t:"Filme 4",i:"https://img.youtube.com/vi/jaGKARCrOqI/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jaGKARCrOqI",pasta:"Filmes",type:"yt"},
+{t:"Filme 5",i:"https://img.youtube.com/vi/Kp6uGrRC_P4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Kp6uGrRC_P4",pasta:"Filmes",type:"yt"},
+{t:"Filme 6",i:"https://img.youtube.com/vi/iMGIXI8hgM4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/iMGIXI8hgM4",pasta:"Filmes",type:"yt"},
+{t:"Filme 7",i:"https://img.youtube.com/vi/27eKL7NsD6k/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/27eKL7NsD6k",pasta:"Filmes",type:"yt"},
+{t:"Filme 8",i:"https://img.youtube.com/vi/AJzLawEAOtA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/AJzLawEAOtA",pasta:"Filmes",type:"yt"},
+{t:"Filme 9",i:"https://img.youtube.com/vi/gaPE0HTgAP0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/gaPE0HTgAP0",pasta:"Doramas",type:"yt"},
+{t:"Filme 10",i:"https://img.youtube.com/vi/80UbjxkkgLs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/80UbjxkkgLs",pasta:"Doramas",type:"yt"},
+{t:"Filme 11",i:"https://img.youtube.com/vi/e0ck628ObK8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/e0ck628ObK8",pasta:"Doramas",type:"yt"},
+{t:"Filme 12",i:"https://img.youtube.com/vi/d-whmqx4bFU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/d-whmqx4bFU",pasta:"Doramas",type:"yt"},
+{t:"Filme 13",i:"https://img.youtube.com/vi/kYnCTHWUG_4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/kYnCTHWUG_4",pasta:"Doramas",type:"yt"},
+{t:"Filme 14",i:"https://img.youtube.com/vi/pidOEppgiTA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/pidOEppgiTA",pasta:"Doramas",type:"yt"},
+{t:"Filme 15",i:"https://img.youtube.com/vi/e83StaXfk10/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/e83StaXfk10",pasta:"Doramas",type:"yt"},
+{t:"Filme 16",i:"https://img.youtube.com/vi/FbXARpOhCxs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/FbXARpOhCxs",pasta:"Doramas",type:"yt"},
+{t:"Filme 17",i:"https://img.youtube.com/vi/f1qrdpbGMQo/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/f1qrdpbGMQo",pasta:"Doramas",type:"yt"},
+{t:"Filme 18",i:"https://img.youtube.com/vi/jWqdqeXtKW8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jWqdqeXtKW8",pasta:"Doramas",type:"yt"},
+{t:"Filme 19",i:"https://img.youtube.com/vi/t8NUSlDv8Gs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/t8NUSlDv8Gs",pasta:"Doramas",type:"yt"}
 ];
-let videoTemp=null, capaTemp=null, modoYT=false;
-function converteYoutube(url){
- if(!url
+let videoTemp=null,capaTemp=null,modoYT=false;
+function converteYoutube(url){if(!url)return"";url=url.trim();if(url.includes("youtube-nocookie.com/embed"))return url;if(url.includes("youtube.com/embed"))return url.replace("youtube.com/embed","www.youtube-nocookie.com/embed");let id="";if(url.includes("youtu.be/")){id=url.split("youtu.be/")[1].split("?")[0].split("&")[0];}else if(url.includes("watch?v=")){id=url.split("watch?v=")[1].split("&")[0].split("?")[0];}else if(url.includes("shorts/")){id=url.split("shorts/")[1].split("?")[0].split("&")[0];}else if(url.length===11){id=url;}else{return url;}return "https://www.youtube-nocookie.com/embed/"+id;}
+document.getElementById('inputVideo').addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;videoTemp=URL.createObjectURL(f);let p=document.getElementById('preview');p.src=videoTemp;p.style.display='block';});
+document.getElementById('inputCapa').addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;capaTemp=URL.createObjectURL(f);let i=document.getElementById('previewCapa');i.src=capaTemp;i.style.display='block';});
+function getGeneros(){let c=JSON.parse(localStorage.getItem('grati_generos')||'[]');return [...new Set([...GENEROS_PADRAO,...c])];}
+function salvarGeneros(){let gens=getGeneros();document.getElementById('pastaDestino').innerHTML=gens.map(g=>`<option value="${g}">${g}</option>`).join('');renderPorGenero(document.getElementById('busca').value||'');}
+function adicionarGenero(){let n=prompt('Nome do gênero?');if(!n)return;let c=JSON.parse(localStorage.getItem('grati_generos')||'[]');c.push(n.trim());localStorage.setItem('grati_generos',JSON.stringify(c));salvarGeneros();}
+function getTodos(){let s=JSON.parse(localStorage.getItem('grati_lista')||'[]');return [...filmesBase,...s];}
+function renderPorGenero(filtro){
+ let cont=document.getElementById('containerPastas');cont.innerHTML='';
+ let todos=getTodos();
+ if(filtro){let f=filtro.toLowerCase();todos=todos.filter(x=>(x.t+x.pasta).toLowerCase().includes(f));}
+ let gens=getGeneros();let achou=false;
+ gens.forEach(gen=>{
+  let filmesGen=todos.filter(f=>f.pasta===gen);
+  if(filmesGen.length===0)return;
+  achou=true;
+  let html=`<div class="row-title">${gen} (${filmesGen.length})</div><div class="row">`;
+  filmesGen.forEach(f=>{
+   let safeT=f.t.replace(/'/g,"\\'");
+   html+=`<div class="card"><button class="edit" onclick="editarNome('${gen}','${safeT}')">✏️</button><button class="lixeira" onclick="deletarFilme('${gen}','${safeT}')">🗑</button><img src="${f.i}" onerror="this.src='https://via.placeholder.com/135x180?text=SEM+CAPA'" onclick="abrirPlayer('${f.l}',${f.type==='local'})"><div class="t">${f.t}</div></div>`;
+  });
+  html+=`</div>`;cont.innerHTML+=html;
+ });
+ if(!achou){cont.innerHTML='<div style="padding:40px;text-align:center;color:#777">Nenhum filme</div>';}
+}
+function editarNome(gen,nomeAntigo){
+ let novo=prompt('Digite o novo nome:',nomeAntigo);
+ if(!novo||!novo.trim())return;novo=novo.trim();
+ let lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');
+ let achou=lista.find(f=>f.t===nomeAntigo && f.pasta===gen);
+ if(achou){achou.t=novo;localStorage.setItem('grati_lista',JSON.stringify(lista));}
+ else{let base=filmesBase.find(f=>f.t===nomeAntigo && f.pasta===gen);if(base){filmesBase=filmesBase.filter(f=>!(f.t===nomeAntigo && f.pasta===gen));lista.push({t:novo,i:base.i,l:base.l,pasta:base.pasta,type:base.type});localStorage.setItem('grati_lista',JSON.stringify(lista));}}
+ salvarGeneros();
+}
+function abrirPlayer(link,isLocal){if(isLocal){document.getElementById('frame').style.display='none';let v=document.getElementById('videoLocal');v.style.display='block';v.src=link;v.play();}else{document.getElementById('videoLocal').style.display='none';let fr=document.getElementById('frame');fr.style.display='block';fr.src=link;}document.getElementById('player').style.display='block';}
+function fecharPlayer(){document.getElementById('player').style.display='none';document.getElementById('frame').src='';document.getElementById('videoLocal').pause();}
+function voltar(){if(document.getElementById('player').style.display==='block')fecharPlayer();else history.back();}
+function abrirModal(){modoYT=false;document.getElementById('tituloModal').innerText='📱 + VIDEO CELULAR';document.getElementById('areaYT').style.display='none';document.getElementById('areaCelular').style.display='block';document.getElementById('modalAdd').style.display='flex';}
+function abrirModalYT(){modoYT=true;document.getElementById('tituloModal').innerText='🔗 + LINK YT';document.getElementById('areaYT').style.display='block';document.getElementById('areaCelular').style.display='none';document.getElementById('modalAdd').style.display='flex';}
+function fecharModal(){document.getElementById('modalAdd').style.display='none';}
+function salvarPWA(){let nome=document.getElementById('inputNome').value||'Meu Filme';let pasta=document.getElementById('pastaDestino').value;let lista=JSON.parse(localStorage.getItem('grati_lista')||'[]');if(modoYT||document.getElementById('inputLinkYT').value){let raw=document.getElementById('inputLinkYT').value;if(!raw){alert('Cole o link!');return;}let final=converteYoutube(raw);let id=final.split('/embed/')[1]||'';let capa=id?'https://img.youtube.com/vi/'+id+'/hqdefault.jpg':'';lista.push({t:nome,i:capa,l:final,pasta:pasta,type:'yt'});localStorage.setItem('grati_lista',JSON.stringify(lista));fecharModal();salvarGeneros();document.getElementById('inputNome').value='';document.getElementById('inputLinkYT').value='';return;}if(!videoTemp){alert('Escolha o vídeo!');return;}lista.push({t:nome,i:capaTemp||'',l:videoTemp,pasta:pasta,type:'local'});localStorage.setItem('grati_lista',JSON.stringify(lista));fecharModal();salvarGeneros();}
+function deletarFilme(gen,nome){if(!confirm('Apagar "'+nome+'"?'))return;let l=JSON.parse(localStorage.getItem('grati_lista')||'[]');let novo=l.filter(f=>!(f.t===nome && f.pasta===gen));if(novo.length!==l.length){localStorage.setItem('grati_lista',JSON.stringify(novo));}else{filmesBase=filmesBase.filter(f=>!(f.t===nome && f.pasta===gen));}salvarGeneros();}
+function filtrar(){renderPorGenero(document.getElementById('busca').value);}
+function compartilharApp(){if(navigator.share)navigator.share({title:'GRATIFLIX TV',url:location.href});else prompt('Copie:',location.href);}
+function convidarMembros(){let m='Entra no meu Gratiflix TV: '+location.href;if(navigator.share)navigator.share({text:m});else prompt('Convite:',m);}
+salvarGeneros();
+</script>
+</body>
+</html>
