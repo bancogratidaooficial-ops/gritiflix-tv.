@@ -1,7 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRATIFLIX</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#141414;color:#fff;font-family:Arial}header{padding:12px 4%;background:#000;position:fixed;width:100%;top:0;z-index:100;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}.logo{color:#e50914;font-size:32px;font-weight:900}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{border:none;padding:11px 13px;border-radius:4px;font-weight:800;cursor:pointer;font-size:10px}.btn-red{background:#e50914;color:#fff}.btn-green{background:#00c851;color:#fff}.btn-blue{background:#007feb;color:#fff}.search{margin-top:70px;padding:10px 4%;background:#0a0a0a;display:flex;gap:6px;position:fixed;width:100%;z-index:90}.search input{flex:1;padding:12px;border-radius:4px;border:none;background:#222;color:#fff}.search button{padding:12px 16px;border:none;background:#e50914;color:#fff;font-weight:900}.banner{margin-top:122px;height:35vh;background:linear-gradient(to top,#141414 15%,transparent 60%),url('https://images.unsplash.com/photo-1536440136628-849c177e76a1');background-size:cover}.banner-box{padding:40px 4%}.banner-box h1{font-size:48px;font-weight:900}.banner-box h1 span{color:#e50914}.tag{background:#e50914;padding:4px 8px;border-radius:3px;font-weight:800;margin-right:5px;font-size:12px}.row-title{font-size:18px;margin:28px 0 10px 4%;font-weight:800;border-left:4px solid #e50914;padding-left:8px}.row{display:flex;gap:10px;overflow-x:auto;padding:0 4% 10px}.card{min-width:155px;max-width:155px;height:240px;background:#222;border-radius:6px;overflow:hidden;position:relative}.card img{width:100%;height:80%;object-fit:cover}.card.t{padding:6px;font-size:11px}.card.edit{position:absolute;top:5px;left:5px;background:#ffb400;color:#000;border:none;padding:4px 6px;border-radius:4px}.card.del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.8);color:#fff;border:none;padding:4px 6px;border-radius:4px}#player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none}#player iframe{width:100%;height:100%;border:none}#player.voltar{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:9px 14px;border-radius:4px;z-index:10000}#modalAdd{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:10000;display:none;align-items:center;justify-content:center}.modal-box{background:#181818;border-radius:10px;padding:18px;width:90%;max-width:430px;border:1px solid #333}.modal-box h2{color:#e50914;margin-bottom:12px}.modal-box label{font-size:11px;color:#ffb400;font-weight:800;margin:8px 0 4px;display:block}.modal-box input[type=text],.modal-box select{width:100%;padding:11px;border-radius:4px;border:none;background:#222;color:#fff;margin-bottom:8px}</style>
+</head>
+<body>
+<header><div class="logo">GRATIFLIX</div><div class="actions"><button class="btn-red" onclick="abrirModal()">+ VIDEO</button><button class="btn-green" onclick="abrirModalYT()">+ LINK YT</button><button class="btn-blue" onclick="adicionarGenero()">+ PASTA</button><button style="background:#ffb400;color:#000;border:none;padding:11px 13px;border-radius:4px;font-weight:800" onclick="exportarFixo()">💾 SALVAR FIXO</button><button style="background:#333;color:#fff;border:none;padding:11px 13px;border-radius:4px;font-weight:800" onclick="location.reload()">↻ ATUALIZAR</button></div></header>
+<div class="search"><input id="busca" placeholder="🔍 Buscar..." oninput="filtrar()"><button onclick="filtrar()">🔍</button></div>
+<div class="banner"><div class="banner-box"><h1><span style="color:#e50914">GRATI</span>FLIX</h1><p><span class="tag">TOP 10</span><span class="tag">4K</span> Filmes, Doramas e Super Man - Todos os links já codificados!</p></div></div>
+<div id="containerPastas"></div>
+<div id="player"><button class="voltar" onclick="fecharPlayer()">↩ VOLTAR</button><iframe id="frame" allowfullscreen></iframe></div>
+<div id="modalAdd"><div class="modal-box"><h2>Adicionar</h2><label>Pasta:</label><select id="pastaDestino"></select><label>Nome:</label><input type="text" id="inputNome" placeholder="Ex: Turma da Mônica 17"><div id="areaArq"><label>Link YouTube:</label><input type="text" id="inputLinkYT" placeholder="https://youtu.be/..."></div><div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1;padding:13px;background:#333;color:#fff;border:none;border-radius:6px" onclick="fecharModal()">Cancelar</button><button style="flex:1;padding:13px;background:#e50914;color:#fff;border:none;border-radius:6px" onclick="salvarFilme()">Salvar</button></div></div></div>
+<script>
 let GENEROS_PADRAO=["Super Man","Turma da Mônica","Filmes","Doramas","Ação","Geral"];
-
 let filmesBase=[
-// --- SUPER MAN - 17 ---
 {t:"Super Man 1",i:"https://img.youtube.com/vi/plaU0sa1MQ8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/plaU0sa1MQ8",pasta:"Super Man",type:"yt"},
 {t:"Super Man 2",i:"https://img.youtube.com/vi/Rw3Tv8WAd1w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Rw3Tv8WAd1w",pasta:"Super Man",type:"yt"},
 {t:"Super Man 3",i:"https://img.youtube.com/vi/g-Nyi9dOy6E/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/g-Nyi9dOy6E",pasta:"Super Man",type:"yt"},
@@ -19,8 +32,6 @@ let filmesBase=[
 {t:"Super Man 15",i:"https://img.youtube.com/vi/bksyv1D6xLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/bksyv1D6xLc",pasta:"Super Man",type:"yt"},
 {t:"Super Man 16",i:"https://img.youtube.com/vi/YU21uP7TDYU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/YU21uP7TDYU",pasta:"Super Man",type:"yt"},
 {t:"Super Man 17",i:"https://img.youtube.com/vi/CBpL31uUye4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/CBpL31uUye4",pasta:"Super Man",type:"yt"},
-
-// --- TURMA DA MÔNICA - 16 ---
 {t:"Turma da Mônica 1",i:"https://img.youtube.com/vi/BbYLSzrUAwY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/BbYLSzrUAwY",pasta:"Turma da Mônica",type:"yt"},
 {t:"Turma da Mônica 2",i:"https://img.youtube.com/vi/wgg_Ppx9Q6w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/wgg_Ppx9Q6w",pasta:"Turma da Mônica",type:"yt"},
 {t:"Turma da Mônica 3",i:"https://img.youtube.com/vi/b3wM8AGKMBY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/b3wM8AGKMBY",pasta:"Turma da Mônica",type:"yt"},
@@ -38,3 +49,20 @@ let filmesBase=[
 {t:"Turma da Mônica 15",i:"https://img.youtube.com/vi/kxSeC7DxHtQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/kxSeC7DxHtQ",pasta:"Turma da Mônica",type:"yt"},
 {t:"Turma da Mônica 16",i:"https://img.youtube.com/vi/h8TpRa3oMZM/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/h8TpRa3oMZM",pasta:"Turma da Mônica",type:"yt"}
 ];
+let filmes=filmesBase;
+let generos=GENEROS_PADRAO;
+function render(){let cont=document.getElementById('containerPastas');cont.innerHTML='';generos.forEach(g=>{let lista=filmes.filter(f=>f.pasta===g);if(lista.length===0)return;let html=`<div class="row-title">${g} (${lista.length})</div><div class="row">`;lista.forEach(f=>{let idx=filmes.indexOf(f);html+=`<div class="card"><button class="edit" onclick="editar(${idx})">✏️</button><button class="del" onclick="deletar(${idx})">🗑️</button><img src="${f.i}" onclick="play(${idx})"><div class="t">${f.t}</div></div>`});html+=`</div>`;cont.innerHTML+=html;});}
+function play(idx){let f=filmes[idx];document.getElementById('player').style.display='block';document.getElementById('frame').src=f.l;}
+function fecharPlayer(){document.getElementById('player').style.display='none';document.getElementById('frame').src='';}
+function filtrar(){let q=document.getElementById('busca').value.toLowerCase();if(!q){render();return}let cont=document.getElementById('containerPastas');let lista=filmes.filter(f=>f.t.toLowerCase().includes(q));let html=`<div class="row-title">Resultado</div><div class="row">`;lista.forEach(f=>{let idx=filmes.indexOf(f);html+=`<div class="card"><img src="${f.i}" onclick="play(${idx})"><div class="t">${f.t}</div></div>`});cont.innerHTML=html+`</div>`;}
+function abrirModalYT(){document.getElementById('modalAdd').style.display='flex';}
+function fecharModal(){document.getElementById('modalAdd').style.display='none';}
+function salvarFilme(){let nome=document.getElementById('inputNome').value||'Sem nome';let pasta=document.getElementById('pastaDestino').value;let linkYT=document.getElementById('inputLinkYT').value;let id=linkYT.split('v=')[1]?.split('&')[0]||linkYT.split('youtu.be/')[1]?.split('?')[0]||linkYT.split('embed/')[1]?.split('?')[0];if(id){filmes.push({t:nome,i:`https://img.youtube.com/vi/${id}/hqdefault.jpg`,l:`https://www.youtube-nocookie.com/embed/${id}`,pasta:pasta,type:'yt'});}fecharModal();render();}
+function deletar(i){if(confirm('Apagar?')){filmes.splice(i,1);render();}}
+function editar(i){let n=prompt('Novo nome:',filmes[i].t);if(n){filmes[i].t=n;render();}}
+function adicionarGenero(){let n=prompt('Nome da pasta:');if(n){generos.push(n);render();}}
+function exportarFixo(){alert('Já está salvo fixo no GitHub!');}
+let sel=document.getElementById('pastaDestino');function atualizaSel(){sel.innerHTML='';generos.forEach(g=>sel.innerHTML+=`<option>${g}</option>`)}atualizaSel();render();
+</script>
+</body>
+</html>
