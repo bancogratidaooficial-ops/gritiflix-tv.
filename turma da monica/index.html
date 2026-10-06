@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turma da Mônica - GRATIFLIX</title>
+<style>body{background:#141414;color:#fff;font-family:Arial;margin:0}header{padding:15px;background:#000;display:flex;justify-content:space-between;align-items:center} .logo{color:#e50914;font-size:28px;font-weight:900} .row-title{margin:20px 4%;border-left:4px solid #ffb400;padding-left:8px;font-weight:800;font-size:18px} .row{display:flex;flex-wrap:wrap;gap:12px;padding:0 4%} .card{width:150px;background:#222;border-radius:6px;overflow:hidden} .card img{width:100%;height:190px;object-fit:cover;cursor:pointer} .card div{padding:6px;font-size:11px} #player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none} #player iframe{width:100%;height:100%;border:none} .voltar{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:10px 15px;border-radius:5px;z-index:10000}</style>
+</head>
+<body>
+<header><div class="logo">GRATIFLIX - Turma da Mônica</div><button onclick="history.back()" style="background:#e50914;color:#fff;border:none;padding:8px 12px;border-radius:4px;font-weight:800">VOLTAR</button></header>
+<div class="row-title">Turma da Mônica (16)</div><div class="row" id="lista"></div>
+<div id="player"><button class="voltar" onclick="document.getElementById('player').style.display='none';document.getElementById('frame').src=''">↩ VOLTAR</button><iframe id="frame" allowfullscreen></iframe></div>
+<script>
+let filmes=[
+{t:"Turma da Mônica 1",i:"https://img.youtube.com/vi/BbYLSzrUAwY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/BbYLSzrUAwY"},
+{t:"Turma da Mônica 2",i:"https://img.youtube.com/vi/wgg_Ppx9Q6w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/wgg_Ppx9Q6w"},
+{t:"Turma da Mônica 3",i:"https://img.youtube.com/vi/b3wM8AGKMBY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/b3wM8AGKMBY"},
+{t:"Turma da Mônica 4",i:"https://img.youtube.com/vi/xsfVi_0T2ag/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/xsfVi_0T2ag"},
+{t:"Turma da Mônica 5",i:"https://img.youtube.com/vi/uoiEPP0k9pM/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/uoiEPP0k9pM"},
+{t:"Turma da Mônica 6",i:"https://img.youtube.com/vi/vySGgwXfvKA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/vySGgwXfvKA"},
+{t:"Turma da Mônica 7",i:"https://img.youtube.com/vi/Kj8haW4vUaE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Kj8haW4vUaE"},
+{t:"Turma da Mônica 8",i:"https://img.youtube.com/vi/AfxhnsQTkMQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/AfxhnsQTkMQ"},
+{t:"Turma da Mônica 9",i:"https://img.youtube.com/vi/ecfDSTEnLSc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/ecfDSTEnLSc"},
+{t:"Turma da Mônica 10",i:"https://img.youtube.com/vi/aS-T2W-q-gU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/aS-T2W-q-gU"},
+{t:"Turma da Mônica 11",i:"https://img.youtube.com/vi/6OArhiNm_Qg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6OArhiNm_Qg"},
+{t:"Turma da Mônica 12",i:"https://img.youtube.com/vi/o0S-ayw92wA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/o0S-ayw92wA"},
+{t:"Turma da Mônica 13",i:"https://img.youtube.com/vi/rlM-uBgCb_8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/rlM-uBgCb_8"},
+{t:"Turma da Mônica 14",i:"https://img.youtube.com/vi/zOR_AJFfNnY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/zOR_AJFfNnY"},
+{t:"Turma da Mônica 15",i:"https://img.youtube.com/vi/kxSeC7DxHtQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/kxSeC7DxHtQ"},
+{t:"Turma da Mônica 16",i:"https://img.youtube.com/vi/h8TpRa3oMZM/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/h8TpRa3oMZM"}
+];
+let h='';filmes.forEach(f=>{h+=`<div class="card"><img src="${f.i}" onclick="document.getElementById('player').style.display='block';document.getElementById('frame').src='${f.l}'"><div>${f.t}</div></div>`});document.getElementById('lista').innerHTML=h;
+</script>
+</body>
+</html>
