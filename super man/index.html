@@ -1,35 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super Man - GRATIFLIX</title>
-<style>body{background:#141414;color:#fff;font-family:Arial;margin:0}header{padding:15px;background:#000;display:flex;justify-content:space-between;align-items:center} .logo{color:#e50914;font-size:28px;font-weight:900} .row-title{margin:20px 4%;border-left:4px solid #e50914;padding-left:8px;font-weight:800;font-size:18px} .row{display:flex;flex-wrap:wrap;gap:12px;padding:0 4%} .card{width:150px;background:#222;border-radius:6px;overflow:hidden} .card img{width:100%;height:190px;object-fit:cover;cursor:pointer} .card div{padding:6px;font-size:11px} #player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none} #player iframe{width:100%;height:100%;border:none} .voltar{position:absolute;top:15px;left:15px;background:#e50914;color:#fff;border:none;padding:10px 15px;border-radius:5px;z-index:10000}</style>
-</head>
-<body>
-<header><div class="logo">GRATIFLIX - Super Man</div><button onclick="history.back()" style="background:#e50914;color:#fff;border:none;padding:8px 12px;border-radius:4px;font-weight:800">VOLTAR</button></header>
-<div class="row-title">Super Man (17)</div><div class="row" id="lista"></div>
-<div id="player"><button class="voltar" onclick="document.getElementById('player').style.display='none';document.getElementById('frame').src=''">↩ VOLTAR</button><iframe id="frame" allowfullscreen></iframe></div>
-<script>
-let filmes=[
-{t:"Super Man 1",i:"https://img.youtube.com/vi/plaU0sa1MQ8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/plaU0sa1MQ8"},
-{t:"Super Man 2",i:"https://img.youtube.com/vi/Rw3Tv8WAd1w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Rw3Tv8WAd1w"},
-{t:"Super Man 3",i:"https://img.youtube.com/vi/g-Nyi9dOy6E/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/g-Nyi9dOy6E"},
-{t:"Super Man 4",i:"https://img.youtube.com/vi/nul6lTbu3oA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/nul6lTbu3oA"},
-{t:"Super Man 5",i:"https://img.youtube.com/vi/6lcoN1wEwfY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6lcoN1wEwfY"},
-{t:"Super Man 6",i:"https://img.youtube.com/vi/t0EDs_Em5SA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/t0EDs_Em5SA"},
-{t:"Super Man 7",i:"https://img.youtube.com/vi/Okdz0F_yvOs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Okdz0F_yvOs"},
-{t:"Super Man 8",i:"https://img.youtube.com/vi/6c6JRnISSwk/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6c6JRnISSwk"},
-{t:"Super Man 9",i:"https://img.youtube.com/vi/9FiJP1GFI5k/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/9FiJP1GFI5k"},
-{t:"Super Man 10",i:"https://img.youtube.com/vi/dwNV3NHOigE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/dwNV3NHOigE"},
-{t:"Super Man 11",i:"https://img.youtube.com/vi/uyJPOwB6NcE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/uyJPOwB6NcE"},
-{t:"Super Man 12",i:"https://img.youtube.com/vi/6xCyxJusNPs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6xCyxJusNPs"},
-{t:"Super Man 13",i:"https://img.youtube.com/vi/iza00gea8oI/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/iza00gea8oI"},
-{t:"Super Man 14",i:"https://img.youtube.com/vi/ks_-OO4liW0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/ks_-OO4liW0"},
-{t:"Super Man 15",i:"https://img.youtube.com/vi/bksyv1D6xLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/bksyv1D6xLc"},
-{t:"Super Man 16",i:"https://img.youtube.com/vi/YU21uP7TDYU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/YU21uP7TDYU"},
-{t:"Super Man 17",i:"https://img.youtube.com/vi/CBpL31uUye4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/CBpL31uUye4"}
+let GENEROS_PADRAO=["Super Man","Turma da Mônica","Filmes","Doramas","Ação","Geral"];
+
+let filmesBase=[
+// --- SUPER MAN - 17 ---
+{t:"Super Man 1",i:"https://img.youtube.com/vi/plaU0sa1MQ8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/plaU0sa1MQ8",pasta:"Super Man",type:"yt"},
+{t:"Super Man 2",i:"https://img.youtube.com/vi/Rw3Tv8WAd1w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Rw3Tv8WAd1w",pasta:"Super Man",type:"yt"},
+{t:"Super Man 3",i:"https://img.youtube.com/vi/g-Nyi9dOy6E/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/g-Nyi9dOy6E",pasta:"Super Man",type:"yt"},
+{t:"Super Man 4",i:"https://img.youtube.com/vi/nul6lTbu3oA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/nul6lTbu3oA",pasta:"Super Man",type:"yt"},
+{t:"Super Man 5",i:"https://img.youtube.com/vi/6lcoN1wEwfY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6lcoN1wEwfY",pasta:"Super Man",type:"yt"},
+{t:"Super Man 6",i:"https://img.youtube.com/vi/t0EDs_Em5SA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/t0EDs_Em5SA",pasta:"Super Man",type:"yt"},
+{t:"Super Man 7",i:"https://img.youtube.com/vi/Okdz0F_yvOs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Okdz0F_yvOs",pasta:"Super Man",type:"yt"},
+{t:"Super Man 8",i:"https://img.youtube.com/vi/6c6JRnISSwk/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6c6JRnISSwk",pasta:"Super Man",type:"yt"},
+{t:"Super Man 9",i:"https://img.youtube.com/vi/9FiJP1GFI5k/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/9FiJP1GFI5k",pasta:"Super Man",type:"yt"},
+{t:"Super Man 10",i:"https://img.youtube.com/vi/dwNV3NHOigE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/dwNV3NHOigE",pasta:"Super Man",type:"yt"},
+{t:"Super Man 11",i:"https://img.youtube.com/vi/uyJPOwB6NcE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/uyJPOwB6NcE",pasta:"Super Man",type:"yt"},
+{t:"Super Man 12",i:"https://img.youtube.com/vi/6xCyxJusNPs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6xCyxJusNPs",pasta:"Super Man",type:"yt"},
+{t:"Super Man 13",i:"https://img.youtube.com/vi/iza00gea8oI/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/iza00gea8oI",pasta:"Super Man",type:"yt"},
+{t:"Super Man 14",i:"https://img.youtube.com/vi/ks_-OO4liW0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/ks_-OO4liW0",pasta:"Super Man",type:"yt"},
+{t:"Super Man 15",i:"https://img.youtube.com/vi/bksyv1D6xLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/bksyv1D6xLc",pasta:"Super Man",type:"yt"},
+{t:"Super Man 16",i:"https://img.youtube.com/vi/YU21uP7TDYU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/YU21uP7TDYU",pasta:"Super Man",type:"yt"},
+{t:"Super Man 17",i:"https://img.youtube.com/vi/CBpL31uUye4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/CBpL31uUye4",pasta:"Super Man",type:"yt"},
+
+// --- TURMA DA MÔNICA - 16 ---
+{t:"Turma da Mônica 1",i:"https://img.youtube.com/vi/BbYLSzrUAwY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/BbYLSzrUAwY",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 2",i:"https://img.youtube.com/vi/wgg_Ppx9Q6w/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/wgg_Ppx9Q6w",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 3",i:"https://img.youtube.com/vi/b3wM8AGKMBY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/b3wM8AGKMBY",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 4",i:"https://img.youtube.com/vi/xsfVi_0T2ag/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/xsfVi_0T2ag",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 5",i:"https://img.youtube.com/vi/uoiEPP0k9pM/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/uoiEPP0k9pM",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 6",i:"https://img.youtube.com/vi/vySGgwXfvKA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/vySGgwXfvKA",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 7",i:"https://img.youtube.com/vi/Kj8haW4vUaE/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Kj8haW4vUaE",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 8",i:"https://img.youtube.com/vi/AfxhnsQTkMQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/AfxhnsQTkMQ",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 9",i:"https://img.youtube.com/vi/ecfDSTEnLSc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/ecfDSTEnLSc",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 10",i:"https://img.youtube.com/vi/aS-T2W-q-gU/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/aS-T2W-q-gU",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 11",i:"https://img.youtube.com/vi/6OArhiNm_Qg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/6OArhiNm_Qg",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 12",i:"https://img.youtube.com/vi/o0S-ayw92wA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/o0S-ayw92wA",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 13",i:"https://img.youtube.com/vi/rlM-uBgCb_8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/rlM-uBgCb_8",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 14",i:"https://img.youtube.com/vi/zOR_AJFfNnY/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/zOR_AJFfNnY",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 15",i:"https://img.youtube.com/vi/kxSeC7DxHtQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/kxSeC7DxHtQ",pasta:"Turma da Mônica",type:"yt"},
+{t:"Turma da Mônica 16",i:"https://img.youtube.com/vi/h8TpRa3oMZM/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/h8TpRa3oMZM",pasta:"Turma da Mônica",type:"yt"}
 ];
-let h='';filmes.forEach(f=>{h+=`<div class="card"><img src="${f.i}" onclick="document.getElementById('player').style.display='block';document.getElementById('frame').src='${f.l}'"><div>${f.t}</div></div>`});document.getElementById('lista').innerHTML=h;
-</script>
-</body>
-</html>
