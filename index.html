@@ -17,7 +17,7 @@ header{padding:15px 4%;background:linear-gradient(to bottom,rgba(0,0,0,0.9),tran
 .search{margin-top:75px;padding:10px 4%;background:#000;display:flex;gap:8px;position:fixed;width:100%;z-index:90;top:0}
 .search input{flex:1;padding:12px 15px;border-radius:4px;border:1px solid #333;background:#222;color:#fff;font-size:14px}
 .search button{padding:12px 18px;border-radius:4px;border:none;background:#e50914;color:#fff;font-weight:900}
-/* BANNER ESTILO GRATFLIX */
+/* BANNER ESTILO GRATIFLIX */
 .banner{margin-top:125px;height:60vh;position:relative;background:linear-gradient(to top,#141414 10%,transparent 50%),linear-gradient(to bottom,rgba(0,0,0,0.7),transparent 30%),url('https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200');background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:4%;overflow:hidden}
 .banner::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:120px;background:linear-gradient(to top,#141414,transparent)}
 .banner-content{position:relative;z-index:2;max-width:500px}
@@ -87,7 +87,7 @@ header{padding:15px 4%;background:linear-gradient(to bottom,rgba(0,0,0,0.9),tran
 try{ JSON.parse(localStorage.getItem('grati_lista')||'[]'); }catch(e){ localStorage.removeItem('grati_lista'); }
 try{ JSON.parse(localStorage.getItem('grati_generos')||'[]'); }catch(e){ localStorage.removeItem('grati_generos'); }
 
-let GENEROS_PADRAO = ["Filmes","Doramas","Ação","Comédia","Geral"];
+let GENEROS_PADRAO = ["Filmes","Doramas","Ação","Comédia","ficcao","dramas","desenhos","Dragon ball","super man","homem aranha","series","novelas","romance","Animação","Geral"];
 let filmesBase=[
 {t:"Filme 1",i:"https://img.youtube.com/vi/lpeIKPBsuLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lpeIKPBsuLc",pasta:"Filmes",type:"yt"},
 {t:"Filme 2",i:"https://img.youtube.com/vi/lIZdF-Yf-ig/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lIZdF-Yf-ig",pasta:"Filmes",type:"yt"},
