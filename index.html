@@ -22,9 +22,9 @@ OBS PRA ADICIONAR PASTA COM HTML:
 <div id="modalAdd"><div class="modal-box"><h2 style="color:#e50914">Adicionar</h2><label>Pasta:</label><select id="pastaDestino"></select><label>Nome:</label><input type="text" id="inputNome" style="width:100%;padding:11px;background:#222;color:#fff;border:none;border-radius:4px;margin-bottom:8px"><label>Link YT:</label><input type="text" id="inputLinkYT" placeholder="https://youtu.be/..." style="width:100%;padding:11px;background:#222;color:#fff;border:none;border-radius:4px"><div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1;padding:13px;background:#333;color:#fff;border:none;border-radius:6px" onclick="fecharModal()">Cancelar</button><button style="flex:1;padding:13px;background:#e50914;color:#fff;border:none;border-radius:6px" onclick="salvarFilme()">Salvar</button></div></div></div>
 <script>
 if(localStorage.getItem('gratiflix_versao')!=='v72'){localStorage.clear();localStorage.setItem('gratiflix_versao','v72');}
-let GENEROS_PADRAO=["Super Man","Turma da Mônica","Filmes","Doramas","Chaves","Ação","Geral","loone tunes"];
-let filmesBase=["loone tunes"];
-  {t:",loone tunes,i:https://img.youtube.com/watch?v=_mHcWWOa3aI&feature=shared
+let GENEROS_PADRAO=["Super Man","Turma da Mônica","Filmes","Doramas","Chaves","Ação","Geral","loone tunes","];
+let filmesBase=["loone tunes"]
+  
 {t:"Filme 1",i:"https://img.youtube.com/vi/lpeIKPBsuLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lpeIKPBsuLc",pasta:"Filmes",type:"yt"},
 {t:"Filme 2",i:"https://img.youtube.com/vi/lIZdF-Yf-ig/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lIZdF-Yf-ig",pasta:"Filmes",type:"yt"},
 {t:"Filme 3",i:"https://img.youtube.com/vi/PuVuB9iKZGg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/PuVuB9iKZGg",pasta:"Filmes",type:"yt"},
