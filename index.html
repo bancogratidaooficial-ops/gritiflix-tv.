@@ -97,6 +97,7 @@ let filmesBase=[
 {t:"Chaves 18",i:"https://img.youtube.com/vi/QbBFmlQfHmk/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/QbBFmlQfHmk",pasta:"Chaves",type:"yt"},
 {t:"Chaves 19",i:"https://img.youtube.com/vi/TRu9a0uInEc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/TRu9a0uInEc",pasta:"Chaves",type:"yt"},
 {t:"Chaves 20",i:"https://img.youtube.com/vi/qodstxAiEs0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/qodstxAiEs0",pasta:"Chaves",type:"yt"}
+{t:"Looney tunes",:"https://youtube.com/watch?v=_mHcWWOa3aI&feature=shared
 ];
 let filmes=filmesBase;let generos=GENEROS_PADRAO;
 function render(){let c=document.getElementById('containerPastas');c.innerHTML='';generos.forEach(g=>{let lista=filmes.filter(f=>f.pasta===g);if(lista.length===0)return;let h=`<div class="row-title">${g} (${lista.length})</div><div class="row">`;lista.forEach(f=>{let i=filmes.indexOf(f);h+=`<div class="card"><img src="${f.i}" onclick="play(${i})"><div class="t">${f.t}</div></div>`});h+=`</div>`;c.innerHTML+=h;});}
