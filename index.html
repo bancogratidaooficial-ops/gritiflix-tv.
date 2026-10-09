@@ -40,32 +40,26 @@ header{padding:12px 2%;background:#000;position:fixed;width:100%;top:0;z-index:1
 <div style="margin-top:115px;padding:20px 2%;background:linear-gradient(to top,#141414,transparent),url('https://images.unsplash.com/photo-1536440136628-849c177e76a1');background-size:cover"><h1><span style="color:#e50914">GRATI</span>FLIX</h1><p>72 filmes + opção Portal do Povo adicionada!</p></div>
 <div id="lista"></div>
 <div id="player"><button onclick="fechar()" style="position:absolute;top:12px;left:12px;background:#e50914;color:#fff;border:none;padding:8px 12px;border-radius:4px;z-index:10000">↩ VOLTAR</button><iframe id="frame" allowfullscreen></iframe></div>
-
 <div id="modal"><div class="box" id="boxConteudo"></div></div>
-
 <script>
 let GENEROS_PADRAO=["Super Man","Turma da Mônica","Filmes","Doramas","Chaves","Looney Tunes","Ação","Geral"];
 let filmesBase=[
 {t:"O estupendo semprini 1",i:"https://img.youtube.com/vi/apglQ4YV6qA/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/apglQ4YV6qA",pasta:"O estupendo semprini"},
- 
 {t:"urlo 1",i:"https://img.youtube.com/vi/hhZ7ZlwFP3g/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/hhZ7ZlwFP3g",pasta:"urlo"},
 {t:"Mr bean 1",i:"https://img.youtube.com/vi/9CXZW-7I65I/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/9CXZW-7I65I",pasta:"Mr bean"},
-
 {t:"Mr bean 1",i:"https://img.youtube.com/vi/B9P9fHUphTg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/B9P9fHUphTg",pasta:"Mr bean"},
 {t:"Mr bean 1",i:"https://img.youtube.com/vi/jvpGKLJAvs0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jvpGKLJAvs0",pasta:"Mr bean"},
-
 {t:"Pantera cor de rosa 1",i:"https://img.youtube.com/vi/OMbY_OHYrf0/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/OMbY_OHYrf0",pasta:"Pantera cor de rosa"},
 {t:"He man 1",i:"https://img.youtube.com/vi/PmE3VOaXfjQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/PmE3VOaXfjQ",pasta:"He man"},
 {t:"He man parte 2 1",i:"https://img.youtube.com/vi/60qz0qVadZQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/60qz0qVadZQ",pasta:"He man parte 2"},
 {t:"Hércules 1",i:"https://img.youtube.com/vi/RZP4J9vZDE8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/RZP4J9vZDE8",pasta:"Hércules"},
-
 {t:"Pica pau 1",i:"https://img.youtube.com/vi/KEI24WXz3RQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/KEI24WXz3RQ",pasta:"Pica pau"},
-
 {t:"Entre eras 1°temporada 1",i:"https://img.youtube.com/vi/4mRFHovxeBQ/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/4mRFHovxeBQ",pasta:"Entre eras 1°temporada"}, 
 {t:"Filme 1",i:"https://img.youtube.com/vi/lpeIKPBsuLc/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lpeIKPBsuLc",pasta:"Filmes"},
 {t:"Filme 2",i:"https://img.youtube.com/vi/lIZdF-Yf-ig/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/lIZdF-Yf-ig",pasta:"Filmes"},
 {t:"Filme 3",i:"https://img.youtube.com/vi/PuVuB9iKZGg/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/PuVuB9iKZGg",pasta:"Filmes"},
 {t:"Filme 4",i:"https://img.youtube.com/vi/jaGKARCrOqI/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jaGKARCrOqI",pasta:"Filmes"},
+{t:"Reencarnação 1",i:"https://img.youtube.com/vi/a2Ixd5mh7do/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/a2Ixd5mh7do",pasta:"Reencarnação"},
 {t:"Filme 5",i:"https://img.youtube.com/vi/Kp6uGrRC_P4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/Kp6uGrRC_P4",pasta:"Filmes"},
 {t:"Filme 6",i:"https://img.youtube.com/vi/iMGIXI8hgM4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/iMGIXI8hgM4",pasta:"Filmes"},
 {t:"Filme 7",i:"https://img.youtube.com/vi/27eKL7NsD6k/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/27eKL7NsD6k",pasta:"Filmes"},
@@ -82,7 +76,6 @@ let filmesBase=[
 {t:"Doramas 18",i:"https://img.youtube.com/vi/jWqdqeXtKW8/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/jWqdqeXtKW8",pasta:"Doramas"},
 {t:"Doramas 19",i:"https://img.youtube.com/vi/t8NUSlDv8Gs/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/t8NUSlDv8Gs",pasta:"Doramas"},
 {t:"Chaves 1",i:"https://img.youtube.com/vi/J8Q1dkDXrmk/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/J8Q1dkDXrmk",pasta:"Chaves"},
-
 {t:"Chaves 1",i:"https://img.youtube.com/vi/NdQn3sOGAB4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/NdQn3sOGAB4",pasta:"Chaves"},
 {t:"Chaves 2",i:"https://img.youtube.com/vi/4RNI-qPzMu4/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/4RNI-qPzMu4",pasta:"Chaves"},
 {t:"Chaves 3",i:"https://img.youtube.com/vi/nON_DKL5asw/hqdefault.jpg",l:"https://www.youtube-nocookie.com/embed/nON_DKL5asw",pasta:"Chaves"},
